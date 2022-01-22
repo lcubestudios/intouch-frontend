@@ -1,4 +1,4 @@
-# test
+# tailwind-v3
 
 ## Project setup
 ```

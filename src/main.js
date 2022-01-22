@@ -1,4 +1,15 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from "vue"
+import App from "./App.vue"
+import router from "./router/index.js"
+import store from "./store/index.js"
 
-createApp(App).mount('#app')
+import './assets/css/main.css'
+import './assets/css/tailwind.css'
+
+import LoginForm from './components/LoginForm.vue'
+
+createApp(App)
+	.use(router)
+	.use(store)
+	.component('LoginForm', LoginForm)
+	.mount("#messaging-app");
