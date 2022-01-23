@@ -1,6 +1,7 @@
 <template>
 	<div>
-		
+		<Dropdown/>
+		<ContactList/>
 	</div>
 </template>
 
