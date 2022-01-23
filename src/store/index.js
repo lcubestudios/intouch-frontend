@@ -4,13 +4,18 @@ import Cookies from "js-cookie"
 
 const state = () => {
 	return {
-		token: null
+		token: null,
+		isNewContactModalVisible: true
 	}
 }
 
 const mutations = {
 	setToken(state, val) {
 		state.token = val
+	},
+	setModalVisibility(state, data) {
+		state[`is${ data.id }ModalVisible`] = data.val
+		console.log(state[`is${ data.id }ModalVisible`])
 	}
 }
 
@@ -20,12 +25,22 @@ const actions = {
 	},
 	userLogout({ commit }) {
 		commit('setToken', null)
+	},
+	showModal({ commit }, id) {
+		commit('setModalVisibility', { id, val: true })
+	},
+	hideModal({ commit }, id) {
+		console.log(id)
+		commit('setModalVisibility', { id, val: false })
 	}
 }
 
 const getters = {
 	isAuthenticated(state) {
 		return !!state.token
+	},
+	isNewContactModalVisible(state) {
+		return state.isNewContactModalVisible
 	}
 }
 

@@ -3,7 +3,7 @@
 		<div class="block mx-auto w-36 h-36 bg-gray-500 rounded-full mb-4">
 		</div>
 		<div class="form-field">
-			<input id="phone" name="phone" class="my-2 bg-gray-300" type="text" placeholder="phone number" />
+			<input id="phone_number" name="phone_number" class="my-2 bg-gray-300" type="text" placeholder="phone number" />
 		</div>
 		<div class="form-field">
 			<input id="password" name="password" class="my-2 bg-gray-300" type="password" placeholder="password" />
