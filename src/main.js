@@ -11,6 +11,8 @@ import UiFooter from './components/ui/Footer.vue'
 import UiModal from './components/ui/Modal.vue'
 import LoginForm from './components/LoginForm.vue'
 import NewContactForm from './components/NewContactForm.vue'
+import Dropdown from './components/Dropdown.vue'
+import ContactListItem from './components/ContactListItem.vue'
 
 createApp(App)
 	.use(router)
@@ -20,4 +22,6 @@ createApp(App)
 	.component('UiModal', UiModal)
 	.component('LoginForm', LoginForm)
 	.component('NewContactForm', NewContactForm)
+	.component('Dropdown', Dropdown)
+	.component('ContactListItem', ContactListItem)
 	.mount("#messaging-app");
