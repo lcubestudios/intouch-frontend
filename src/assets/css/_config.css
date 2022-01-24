@@ -1,10 +1,11 @@
 
 :root {
-	--color-black: #000000;
+	--color-black: #1C1C1C;
 	--color-white: #FFFFFF;
-	--color-gray-100: #ECECEC;
-	--color-gray-400: #AAAAAA;
-	--color-gray-600: #333333;
+	--color-gray: #AAAAAA;
+	--color-background: #EFEFEF;
+	--color-primary: #336E8D;
+	--color-alert: #FA3E3E;
 
 	--toolbar-height: 60px;
 }

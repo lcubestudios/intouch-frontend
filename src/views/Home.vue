@@ -1,52 +1,48 @@
 <template>
-	<div class="w-full h-full flex flex-col">
-		<UiHeader>
-			<template v-slot:center>
-				Header
-			</template>
-			<template v-slot:right>
-				<button @click="toggleDropdown">Y</button>
-			</template>
-		</UiHeader>
-		<main class="relative flex-1 bg-pink-100 overflow-hidden">
-			<div class="h-full overflow-scroll">
-				<ContactListItem
-					v-for="(contact, ndx) in contacts"
-					:key="ndx"
-				/>
-			</div>
-		</main>
-		<UiFooter class="justify-center top-round">
-			<button class="relative btn-icon" @click="showNewContactModal">ADD</button>
-		</UiFooter>
+	<div class="w-full h-full md:flex md:flex-row">
+		<ContactView 
+			class="md:flex min-w-360px md:w-1/4"
+			:class="{
+				'hidden': currView !== 'contacts'
+			}"
+			:contacts="contacts"
+		/>
+		<MessageView 
+			class="md:flex md:w-3/4" 
+			:class="{
+				'hidden': currView !== 'messages'
+			}"
+			:messages="messages"
+		/>
 	</div>
 </template>
 
 <script>
-import { useRouter } from 'vue-router'
+import { computed } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
 	name: 'Contacts',
 	setup() {
-		const router = useRouter()
 		const store = useStore()
-		const userLogout = () => {
-			store.dispatch('userLogout')
-			router.push('/auth')
-		}
-		const toggleDropdown = () => {
-			console.log('dropdown');
-		}
-		const showNewContactModal = () => {
-			store.dispatch(`showModal`, 'NewContact')
-		}
+		// store.dispatch('setContacts', dummyGetContacts.contacts)
+
+		const currView = computed(() => {
+			return store.getters.currView
+		})
+		const contacts = computed(() => {
+			return store.getters.contacts
+		})
+		const messages = computed(() => {
+			return store.getters.messages
+		})
+
+		console.log(messages.value)
 
 		return {
-			userLogout,
-			toggleDropdown,
-			showNewContactModal,
-			contacts: [{val:1},{val:1},{val:1},{val:1},{val:1},{val:1},{val:1},{val:1},{val:1},{val:1},{val:1},{val:1}]
+			currView,
+			contacts,
+			messages,
 		}
 	},
 }

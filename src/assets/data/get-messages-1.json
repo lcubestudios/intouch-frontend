@@ -1,0 +1,30 @@
+{
+	"messages": [
+		{
+			"isSender": false,
+			"messages": [
+				{
+					"dt_created": "01/22/2022",
+					"timestamp": "01:22",
+					"body": "1 said something to 0",
+					"sender_uid": 1,
+					"receiver_uid": 0
+				},
+				{
+					"dt_created": "01/22/2022",
+					"timestamp": "01:26",
+					"body": "1 said something to 0 twice in a row",
+					"sender_uid": 1,
+					"receiver_uid": 0
+				},
+				{
+					"dt_created": "01/22/2022",
+					"timestamp": "01:31",
+					"body": "1 said something to 0 thrice in a row",
+					"sender_uid": 1,
+					"receiver_uid": 0
+				}
+			]
+		}
+	]
+}

@@ -1,36 +1,48 @@
 <template>
 	<form @submit.prevent="userLogin" class="flex flex-col p-4">
-		<div class="block mx-auto w-36 h-36 bg-gray-500 rounded-full mb-4">
+		<div class="profile-icon-xl mx-auto mb-4">
 		</div>
 		<div class="form-field">
-			<input id="phone_number" name="phone_number" class="my-2 bg-gray-300" type="text" placeholder="phone number" />
+			<input v-model="phone_number" id="phone_number" name="phone_number" class="my-2" type="text" placeholder="phone number" required />
 		</div>
 		<div class="form-field">
-			<input id="password" name="password" class="my-2 bg-gray-300" type="password" placeholder="password" />
+			<input v-model="password" id="password" name="password" class="my-2" type="password" placeholder="password" required />
 		</div>
-		<button type="submit" class="btn bg-gray-500 text-white hover:bg-gray-700 mt-8">LOG IN</button>
+		<button type="submit" class="btn bg-primary text-white hover:bg-gray-700 mt-8">LOG IN</button>
 	</form>
 </template>
 
 <script>
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import postAuth from '../assets/data/post-auth.json'
 
 export default {
 	name: 'LoginForm',
 	setup() {
 		const router = useRouter()
 		const store = useStore()
+		const phone_number = ref('')
+		const password = ref('')
 		const userLogin = () => {
-			store.dispatch('userLogin')
+			const payload = {
+				phone_number: phone_number.value,
+				password: password.value
+			}
+
+			store.dispatch('userLogin', payload)
+				.then(() => {
+					router.push('/')
+				})
+				.catch((err) => {
+					store.dispatch('showAlert', err.error_message)
+				})
 		}
 
-		console.log(router)
-		console.log(postAuth)
-
 		return {
-			userLogin
+			userLogin,
+			phone_number,
+			password
 		}
 	},
 }

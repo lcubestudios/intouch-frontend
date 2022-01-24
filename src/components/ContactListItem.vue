@@ -1,52 +1,75 @@
 <template>
-  <div>
-    <div class="contact_list">
-      <div class="contact_list_wrapper">
-        <div class="contact_profile_container">
-          <div class="contact_profile_image"></div>
-        </div>
-        <div class="contact_profile_number">929-342-2424</div>
-        <div class="contact_profile_dots_container">
-          <div class="contact_profile_dots"></div>
-          <div class="contact_profile_dots"></div>
-          <div class="contact_profile_dots"></div>
-        </div>
+  <div class="flex flex-row flex-nowrap w-full bg-white h-80px border-b border-gray-200 cursor-pointer">
+    <div class="w-full flex items-center justify-between px-4">
+      <div class="relative" @click="goToMessages(item.uid)">
+        <div class="profile-icon"></div>
+        <span 
+          v-if="item.unread_count && item.unread_count > 0"
+          class="absolute top-0 right-0 flex justify-center items-center w-5 h-5 rounded-full text-xs bg-alert text-white"
+        >
+          {{ item.unread_count }}
+        </span>
       </div>
+      <div class="flex-1 text-left px-4" @click="goToMessages(item.uid)">
+        {{ item.phone_number }}
+      </div>
+      <div v-if="!isToolbarVisible" class="flex items-center justify-center">
+        <button class="relative btn-icon" @click="showToolbar">
+          <mdicon name="dots-vertical" />
+        </button>
+      </div>
+    </div>
+    <div v-if="isToolbarVisible" class="flex items-center justify-center">
+      <button
+        class="relative btn-icon bg-alert text-white flex items-center justify-center w-80px h-80px"
+        @click="deleteContact(item.uid)"
+        v-click-outside="hideToolbar"
+      >
+        <mdicon name="dots-delete" />
+      </button>
     </div>
   </div>
 </template>
 
-<style scoped>
-  .contact_list {
-    width: 100%;
-    height: auto;
-    padding: 1rem;
-    background-color: #efefef;
-  }
+<script>
+import { ref } from 'vue'
+import { useStore } from 'vuex'
+import vClickOutside from 'click-outside-vue3'
 
-  .contact_list_wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+export default {
+  name: 'ContactListItem',
+  directives: {
+    clickOutside: vClickOutside.directive,
+  },
+  props: {
+    item: {
+      type: [Object],
+    },
+  },
+  setup() {
+    const store = useStore()
+    const isToolbarVisible = ref(false)
+    const showToolbar = () => {
+      isToolbarVisible.value = true
+    }
+    const hideToolbar = () => {
+      isToolbarVisible.value = false
+    }
+    const goToMessages = (uid) => {
+      store.dispatch('setView', 'messages')
+      store.dispatch('setCurrContact', uid)
+    }
+    const deleteContact = (uid) => {
+      store.dispatch('deleteContact', uid)
+    }
 
-  .contact_profile_container {
-    height: 3rem;
-    width: 3rem;
-    background-color: black;
-    border-radius: 50%;
-    margin-right: 2rem;
-  }
-
-  .contact_profile_dots_container {
-    margin-left: auto;
-  }
-
-  .contact_profile_dots {
-    height: .5rem;
-    width: .5rem;
-    background-color: black;
-    border-radius: 50%;
-    margin: .2rem 0;
-  }
-</style>
+    return {
+      isToolbarVisible,
+      showToolbar,
+      hideToolbar,
+      goToMessages,
+      deleteContact,
+    }
+  },
+}
+</script>
