@@ -1,9 +1,11 @@
 <template>
-  <router-view />
-  <UiAlert 
-    v-if="hasAlert"
-    :message="alertMessage"
-  />
+	<div class="relative w-screen h-screen overflow-scroll">
+		<router-view />
+		<UiAlert 
+			v-if="hasAlert"
+			:message="alertMessage"
+		/>
+	</div>
 </template>
 
 <script>

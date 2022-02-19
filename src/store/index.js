@@ -3,13 +3,12 @@ import createPersistedState from 'vuex-persistedstate'
 // import axios from 'axios'
 import Cookies from 'js-cookie'
 
-import dummyPostAuth from '../assets/data/post-auth.json'
 import dummyGetContacts from '../assets/data/get-contacts.json'
 import dummyGetMessages from '../assets/data/get-messages.js'
 
 const state = () => {
 	return {
-		token: null,
+		authForm: 'login',
 		profile: null,
 		isNewContactModalVisible: true,
 		isAlertVisible: false,
@@ -22,8 +21,8 @@ const state = () => {
 }
 
 const mutations = {
-	setToken(state, val) {
-		state.token = val
+	setAuthForm(state, val) {
+		state.authForm = val
 	},
 	setProfile(state, val) {
 		state.profile = val
@@ -52,25 +51,52 @@ const mutations = {
 }
 
 const actions = {
-	userLogin({ dispatch, commit }) {
-		return new Promise((resolve, reject) => {
-			const {
-				token,
-				profile
-			} = dummyPostAuth
-
-			console.log(resolve)
-			console.log(reject)
-			
-			dispatch('getContacts')
-
-			commit('setToken', token)
-			commit('setProfile', profile)
-			resolve(dummyPostAuth)
-			// reject({ error_message: 'test error' })
+	setAuthForm({ commit }, val) {
+		commit('setAuthForm', val)
+	},
+	async userLogin({ dispatch, commit }, payload) {
+		return await fetch(`http://demo-dev.lcubestudios.io/intouch-backend/auth.php?purpose=login`, {
+			method: 'POST',
+			body: JSON.stringify(payload)
 		})
-
-		// commit('setToken', 'test');
+			.then(req => req.json())
+			.then(res => {	
+				if (res.status_code !== 200) {
+					dispatch('showAlert', res.message)
+					return false
+				}
+				else {
+					commit('setProfile', res.profile)
+					return true
+				}
+			})
+			.catch((err) => {
+				console.log(err)
+				dispatch('showAlert', 'An error has occured. Please try again later.')
+				return false
+			})
+	},
+	async userReg({ dispatch, commit }, payload) {
+		return await fetch(`http://demo-dev.lcubestudios.io/intouch-backend/auth.php?purpose=reg`, {
+			method: 'POST',
+			body: JSON.stringify(payload)
+		})
+			.then(req => req.json())
+			.then(res => {	
+				if (res.status_code !== 200) {
+					dispatch('showAlert', res.message)
+					return false
+				}
+				else {
+					commit('setProfile', res.profile)
+					return true
+				}
+			})
+			.catch((err) => {
+				console.log(err)
+				dispatch('showAlert', 'An error has occured. Please try again later.')
+				return false
+			})
 	},
 	userLogout({ commit }) {
 		commit('setToken', null)
@@ -136,7 +162,10 @@ const actions = {
 
 const getters = {
 	isAuthenticated(state) {
-		return !!state.token
+		return !!state?.profile?.token
+	},
+	authForm(state) {
+		return state.authForm
 	},
 	profile(state) {
 		return state.profile

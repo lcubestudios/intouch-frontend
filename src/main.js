@@ -15,6 +15,7 @@ import UiFooter from './components/ui/Footer.vue'
 import UiAlert from './components/ui/Alert.vue'
 import UiModal from './components/ui/Modal.vue'
 import LoginForm from './components/LoginForm.vue'
+import RegForm from './components/RegForm.vue'
 import NewContactForm from './components/NewContactForm.vue'
 import NewMessageForm from './components/NewMessageForm.vue'
 import UserMenu from './components/UserMenu.vue'
@@ -36,6 +37,7 @@ createApp(App)
 	.component('UiAlert', UiAlert)
 	.component('UiModal', UiModal)
 	.component('LoginForm', LoginForm)
+	.component('RegForm', RegForm)
 	.component('NewContactForm', NewContactForm)
 	.component('NewMessageForm', NewMessageForm)
 	.component('UserMenu', UserMenu)
