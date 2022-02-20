@@ -1,5 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
-// import store from '../store/index.js';
+import store from '../store/index.js';
 import Home from "../views/Home.vue";
 import Auth from "../views/Auth.vue";
 
@@ -7,7 +7,10 @@ const routes = [
 	{
 		path: '/',
 		name: 'Home',
-		component: Home
+		component: Home,
+		meta: {
+			authRequired: true
+		}
 	},
 	{
 		path: '/auth',
@@ -21,12 +24,14 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((_, _2, next) => {
-	// if (to.name !== 'Framework') next()
-	// else if (!store.getters.isAuthenticated && to.name !== 'Auth') next({ name: 'Auth' })
-	// else if (store.getters.isAuthenticated && to.name === 'Auth') next({ name: 'Home' })
-	// else next()
-	next()
+router.beforeEach((to, _, next) => {
+	if (to.matched.some(route => route.meta.authRequired)) {
+		if (!store.getters.isAuthenticated) next({ path: '/auth' })
+		else next()
+	} 
+	else {
+		next()
+	}
 })
 
 export default router

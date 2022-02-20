@@ -17,13 +17,11 @@
 
 <script>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
 export default {
 	name: 'LoginForm',
 	setup() {
-		const router = useRouter()
 		const store = useStore()
 		const phone_number = ref('')
 		const password = ref('')
@@ -41,7 +39,7 @@ export default {
 			const login = await store.dispatch('userLogin', payload)
 
 			if (login) {
-				router.push('/')
+				store.dispatch('setRoute', 'Home')
 			}
 		}
 

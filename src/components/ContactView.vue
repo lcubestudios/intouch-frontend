@@ -22,6 +22,7 @@
       </button>
     </UiFooter>
     <NewContactForm />
+    <EditProfileForm />
   </section>
 </template>
 

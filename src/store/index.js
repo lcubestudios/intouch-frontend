@@ -8,9 +8,11 @@ import dummyGetMessages from '../assets/data/get-messages.js'
 
 const state = () => {
 	return {
+		route: 'Home',
 		authForm: 'login',
 		profile: null,
-		isNewContactModalVisible: true,
+		isNewContactModalVisible: false,
+		isEditProfileModalVisible: false,
 		isAlertVisible: false,
 		alertMessage: null,
 		currView: 'contacts',
@@ -21,6 +23,9 @@ const state = () => {
 }
 
 const mutations = {
+	setRoute(state, val) {
+		state.route = val
+	},
 	setAuthForm(state, val) {
 		state.authForm = val
 	},
@@ -51,6 +56,9 @@ const mutations = {
 }
 
 const actions = {
+	setRoute({ commit }, val) {
+		commit('setRoute', val)
+	},
 	setAuthForm({ commit }, val) {
 		commit('setAuthForm', val)
 	},
@@ -99,11 +107,10 @@ const actions = {
 			})
 	},
 	userLogout({ commit }) {
-		commit('setToken', null)
 		commit('setProfile', null)
-		commit('contacts', [])
-		commit('currContact', null)
-		commit('messages', null)
+		commit('setContacts', [])
+		commit('setCurrContact', null)
+		commit('setMessages', null)
 	},
 	showModal({ commit }, id) {
 		commit('setModalVisibility', { id, val: true })
@@ -157,10 +164,27 @@ const actions = {
 				}]
 			})
 		}
+	},
+	async updateProfile({ state, commit }, payload) {
+		const new_profile = Object.assign(state.profile, payload)
+
+		await fetch('http://demo-dev.lcubestudios.io/intouch-backend/profile.php', {
+			method: 'PUT',
+			headers: new Headers({
+				'Content-Type': 'application/json',
+				'Authorization': 'Bearer ' + state.profile.token
+			}),
+			body: JSON.stringify(new_profile)
+		})
+
+		commit('setProfile', new_profile)
 	}
 }
 
 const getters = {
+	route(state) {
+		return state.route
+	},
 	isAuthenticated(state) {
 		return !!state?.profile?.token
 	},
@@ -175,6 +199,9 @@ const getters = {
 	},
 	isNewContactModalVisible(state) {
 		return state.isNewContactModalVisible
+	},
+	isEditProfileModalVisible(state) {
+		return state.isEditProfileModalVisible
 	},
 	isAlertVisible(state) {
 		return state.isAlertVisible
@@ -197,7 +224,7 @@ export default createStore({
 	plugins: [createPersistedState({
     storage: {
       getItem: key => Cookies.get(key),
-      setItem: (key, value) => Cookies.set(key, value, { expires: 3, secure: true }),
+      setItem: (key, value) => Cookies.set(key, value, { expires: 1, secure: true }),
       removeItem: key => Cookies.remove(key)
     }
   })],

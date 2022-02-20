@@ -1,21 +1,22 @@
 <template>
   <section class="w-full h-full flex flex-col">
-    <UiHeader :title="currContact.phone_number">
+    <UiHeader title="xxx.xxx.xxxx">
       <template v-slot:left>
         <button @click="goToContacts" class="md:hidden">
           <mdicon name="arrow-left" />
         </button>
       </template>
       <template v-slot:dropdown>
-        <UserMenu class="md:hidden" />
+				<header class="py-4">
+					<div class="profile-icon mx-auto mb-2"></div>
+					<div class="mb-1"><span>{{ profile?.first_name }} {{ profile?.last_name }}</span></div>
+					<div><span>{{ profile?.phone_number }}</span></div>
+				</header>
         <button class="dropdown-menu-item border-t border-gray-200">
           DELETE MESSAGES
         </button>
         <button class="dropdown-menu-item border-t border-gray-200">
           DELETE CONTACT
-        </button>
-        <button class="dropdown-menu-item border-t border-gray-200">
-          NEW CONTACT
         </button>
       </template>
     </UiHeader>
@@ -50,6 +51,9 @@ export default {
 	},
   setup() {
     const store = useStore()
+    const profile = computed(() => {
+      return store.getters?.profile
+    })
     const showNewContactModal = () => {
       store.dispatch('showModal', 'NewContact')
     }
@@ -61,6 +65,7 @@ export default {
 		})
 
     return {
+      profile,
 			currContact,
       showNewContactModal,
 			goToContacts

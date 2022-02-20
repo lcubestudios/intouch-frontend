@@ -1,6 +1,6 @@
 import { createApp } from "vue"
 import App from "./App.vue"
-import router from "./router/index.js"
+// import router from "./router/index.js"
 import store from "./store/index.js"
 
 import './assets/css/main.css'
@@ -9,6 +9,9 @@ import './assets/css/tailwind.css'
 import vClickOutside from 'click-outside-vue3'
 import mdiVue from 'mdi-vue/v3'
 import * as mdijs from '@mdi/js'
+
+import ViewHome from './views/Home.vue'
+import ViewAuth from './views/Auth.vue'
 
 import UiHeader from './components/ui/Header.vue'
 import UiFooter from './components/ui/Footer.vue'
@@ -24,14 +27,17 @@ import MessageView from './components/MessageView.vue'
 import ContactListItem from './components/ContactListItem.vue'
 import MessageItem from './components/MessageItem.vue'
 import MessageBubble from './components/MessageBubble.vue'
+import EditProfileForm from './components/EditProfileForm.vue'
 
 createApp(App)
-	.use(router)
+	// .use(router)
 	.use(store)
 	.use(vClickOutside)
 	.use(mdiVue, {
 		icons: mdijs
 	})
+	.component('ViewHome', ViewHome)
+	.component('ViewAuth', ViewAuth)
 	.component('UiHeader', UiHeader)
 	.component('UiFooter', UiFooter)
 	.component('UiAlert', UiAlert)
@@ -46,4 +52,5 @@ createApp(App)
 	.component('ContactListItem', ContactListItem)
 	.component('MessageItem', MessageItem)
 	.component('MessageBubble', MessageBubble)
+	.component('EditProfileForm', EditProfileForm)
 	.mount("#messaging-app");

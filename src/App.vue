@@ -1,6 +1,6 @@
 <template>
 	<div class="relative w-screen h-screen overflow-scroll">
-		<router-view />
+		<component :is="'View' + currentView"></component>
 		<UiAlert 
 			v-if="hasAlert"
 			:message="alertMessage"
@@ -22,10 +22,20 @@ export default {
     const alertMessage = computed(() => {
       return store.getters.alertMessage
     })
+		const currentView = computed(() => {
+			return store.getters.route
+		})
+		const isAuthenticated = computed(() => {
+			return store.getters.isAuthenticated
+		})
+
+		if (isAuthenticated.value && currentView.value === 'Auth') store.dispatch('setRoute', 'Home')
+		else if (!isAuthenticated.value && currentView.value !== 'Auth') store.dispatch('setRoute', 'Auth')
 
     return {
       hasAlert,
-      alertMessage
+      alertMessage,
+			currentView
     }
   }
 }

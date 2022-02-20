@@ -26,13 +26,11 @@
 
 <script>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
 export default {
 	name: 'RegForm',
 	setup() {
-		const router = useRouter()
 		const store = useStore()
 		const first_name = ref('')
 		const last_name = ref('')
@@ -52,7 +50,6 @@ export default {
 				password: password.value,
 			}
 
-			console.log(payload)
 			if (password.value !== confirm_password.value) {
 				await store.dispatch('showAlert', 'passwords do not match.')
 			}
@@ -60,7 +57,7 @@ export default {
 				const reg = await store.dispatch('userReg', payload)
 
 				if (reg) {
-					router.push('/')
+				store.dispatch('setRoute', 'Home')
 				}
 			}
 		}
