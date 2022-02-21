@@ -288,6 +288,34 @@ const actions = {
 			return false
 		})
 	},
+	async deleteMessages({ state, dispatch, commit }, phone_number) {
+		await axios
+			.delete(
+				'http://demo-dev.lcubestudios.io/intouch-backend/messages.php',
+				{
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': 'Bearer ' + state.profile.token
+					},
+					data: { phone_number }
+				}
+			)
+			.then(({ data }) => {
+				if (data.status_code !== 200) {
+					dispatch('showAlert', data.message)
+					return false
+				}
+				else {
+					commit('setMessages', [])
+					return true
+				}
+			})
+			.catch((err) => {
+				console.log(err)
+				dispatch('showAlert', 'An error has occured. Please try again later.')
+				return false
+			})
+	},
 	async updateProfile({ state, dispatch, commit }, payload) {
 		await axios
 			.put(

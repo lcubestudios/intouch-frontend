@@ -7,7 +7,7 @@
         </button>
       </template>
       <template v-slot:dropdown>
-				<button class="dropdown-menu-item border-t border-gray-200">
+				<button class="dropdown-menu-item border-t border-gray-200" @click="deleteMessages">
 					DELETE MESSAGES
 				</button>
 				<button class="dropdown-menu-item border-t border-gray-200" @click="deleteContact">
@@ -71,6 +71,10 @@ export default {
 			await store.dispatch('setMessages', [])
 			location.reload();
 		}
+		
+		const deleteMessages = async () => {
+			await store.dispatch('deleteMessages', currContact.value.phone_number)
+		}
 
     return {
       profile,
@@ -78,6 +82,7 @@ export default {
       showNewContactModal,
 			goToContacts,
 			deleteContact,
+			deleteMessages,
 			contactName
     }
   },
