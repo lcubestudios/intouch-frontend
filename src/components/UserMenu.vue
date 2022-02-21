@@ -32,7 +32,8 @@ export default {
     }
 
     const getContacts = () => {
-      store.dispatch('getContacts')
+			store.dispatch('getContacts')
+			console.log(store.getters.contacts)
     }
 
 		return {

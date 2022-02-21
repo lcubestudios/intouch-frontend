@@ -4,10 +4,10 @@
       <div class="relative" @click="goToMessages(item.phone_number)">
         <div class="profile-icon"></div>
         <span 
-          v-if="item.unread_count && item.unread !== '0'"
+          v-if="item.unread && item.unread !== '0'"
           class="absolute top-0 right-0 flex justify-center items-center w-5 h-5 rounded-full text-xs bg-alert text-white"
         >
-          {{ item.unread_count }}
+          {{ item.unread }}
         </span>
       </div>
       <div class="flex-1 text-left px-4" @click="goToMessages(item.phone_number)">
