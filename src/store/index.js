@@ -1,10 +1,7 @@
 import { createStore } from 'vuex' 
 import createPersistedState from 'vuex-persistedstate'
-// import axios from 'axios'
+import axios from 'axios'
 import Cookies from 'js-cookie'
-
-import dummyGetContacts from '../assets/data/get-contacts.json'
-import dummyGetMessages from '../assets/data/get-messages.js'
 
 const state = () => {
 	return {
@@ -62,19 +59,24 @@ const actions = {
 	setAuthForm({ commit }, val) {
 		commit('setAuthForm', val)
 	},
-	async userLogin({ dispatch, commit }, payload) {
-		return await fetch(`http://demo-dev.lcubestudios.io/intouch-backend/auth.php?purpose=login`, {
-			method: 'POST',
-			body: JSON.stringify(payload)
-		})
-			.then(req => req.json())
-			.then(res => {	
-				if (res.status_code !== 200) {
-					dispatch('showAlert', res.message)
+	async userReg({ dispatch, commit }, payload) {
+		return await axios
+			.post(
+				`http://demo-dev.lcubestudios.io/intouch-backend/auth.php?purpose=reg`,
+				payload, 
+				{
+					headers: {
+						'Content-Type': 'text/json'
+					}
+				}
+			)
+			.then(({ data }) => {	
+				if (data.status_code !== 200) {
+					dispatch('showAlert', data.message)
 					return false
 				}
 				else {
-					commit('setProfile', res.profile)
+					commit('setProfile', data.profile)
 					return true
 				}
 			})
@@ -84,19 +86,26 @@ const actions = {
 				return false
 			})
 	},
-	async userReg({ dispatch, commit }, payload) {
-		return await fetch(`http://demo-dev.lcubestudios.io/intouch-backend/auth.php?purpose=reg`, {
-			method: 'POST',
-			body: JSON.stringify(payload)
-		})
-			.then(req => req.json())
-			.then(res => {	
-				if (res.status_code !== 200) {
-					dispatch('showAlert', res.message)
+	async userLogin({ dispatch, commit }, payload) {
+		return await axios
+			.post(
+				`http://demo-dev.lcubestudios.io/intouch-backend/auth.php?purpose=login`, 
+				payload, 
+				{
+					headers: {
+						'Content-Type': 'text/json'
+					}
+				}
+			)
+			.then(({ data }) => {	
+				if (data.status_code !== 200) {
+					dispatch('showAlert', data.message)
 					return false
 				}
 				else {
-					commit('setProfile', res.profile)
+					commit('setProfile', data.profile)
+					dispatch('getContacts', data.profile.token)
+
 					return true
 				}
 			})
@@ -132,15 +141,28 @@ const actions = {
 		commit('setCurrContact', val)
 		commit('setMessages', [])
 	},
-	getContacts({ commit }) {
-		const contacts = dummyGetContacts.contacts
-		const uid = contacts[0].uid
+	async getContacts({ dispatch },token) {
+		await axios.get(
+			'http://demo-dev.lcubestudios.io/intouch-backend/contacts.php',
+			{ token },
+			{
+				headers: {
+					'Content-Type': 'application/json',
+				}
+			}
+		)
+		.then(({ data }) => {
+			console.log(data)
+		})
+		.catch((err) => {
+			console.log(err)
+			dispatch('showAlert', 'An error has occured. Please try again later.')
+			return false
+		})
 
-		const messages = dummyGetMessages[uid].messages
-
-		commit('setContacts', contacts)
-		commit('setCurrContact', uid)
-		commit('setMessages', messages)
+		// commit('setContacts', contacts)
+		// commit('setCurrContact', uid)
+		// commit('setMessages', messages)
 	},
 	setContacts({ commit }, data) {
 		commit('setContacts', data)
@@ -165,19 +187,33 @@ const actions = {
 			})
 		}
 	},
-	async updateProfile({ state, commit }, payload) {
-		const new_profile = Object.assign(state.profile, payload)
-
-		await fetch('http://demo-dev.lcubestudios.io/intouch-backend/profile.php', {
-			method: 'PUT',
-			headers: new Headers({
-				'Content-Type': 'application/json',
-				'Authorization': 'Bearer ' + state.profile.token
-			}),
-			body: JSON.stringify(new_profile)
+	async updateProfile({ state, dispatch, commit }, payload) {
+		await axios.post(
+			'http://demo-dev.lcubestudios.io/intouch-backend/profile.php',
+			payload,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + state.profile.token
+				}
+			}
+		)
+		.then(({ data }) => {
+			console.log(data)
+			if (data.status_code !== 200) {
+				dispatch('showAlert', data.message)
+				return false
+			}
+			else {
+				commit('setProfile', data.profile)
+				return true
+			}
 		})
-
-		commit('setProfile', new_profile)
+		.catch((err) => {
+			console.log(err)
+			dispatch('showAlert', 'An error has occured. Please try again later.')
+			return false
+		})
 	}
 }
 

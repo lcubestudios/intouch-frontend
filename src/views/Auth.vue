@@ -1,5 +1,5 @@
 <template>
-	<div class="block relative container w-full max-w-360px h-full mr-auto ml-auto pt-20">
+	<div class="block relative container w-full max-w-360px h-full mr-auto ml-auto pt-10">
 		<LoginForm v-if="authForm === 'login'" />
 		<RegForm v-else-if="authForm === 'reg'" />
 	</div>

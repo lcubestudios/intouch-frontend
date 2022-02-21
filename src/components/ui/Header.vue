@@ -1,5 +1,5 @@
 <template>
-  <header class="relative z-50 flex flex-row flex-nowrap items-center w-full h-toolbar min-h-toolbar text-white bg-primary overflow-visible">
+  <header class="relative z-10 flex flex-row flex-nowrap items-center w-full h-toolbar min-h-toolbar text-white bg-primary overflow-visible">
     <div class="flex justify-center items-center w-toolbar text-center px-2">
       <slot name="left"> </slot>
     </div>

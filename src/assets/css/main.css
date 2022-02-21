@@ -20,7 +20,7 @@
 	box-sizing: border-box;
 }
 
-.btn { padding: 1em 4em; border-radius: 4px; }
+.btn { padding: 1em; min-width: 200px; border-radius: 4px; }
 
 .top-round::before {
 	content: '';

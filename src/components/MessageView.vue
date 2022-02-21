@@ -7,11 +7,6 @@
         </button>
       </template>
       <template v-slot:dropdown>
-				<header class="py-4">
-					<div class="profile-icon mx-auto mb-2"></div>
-					<div class="mb-1"><span>{{ profile?.first_name }} {{ profile?.last_name }}</span></div>
-					<div><span>{{ profile?.phone_number }}</span></div>
-				</header>
         <button class="dropdown-menu-item border-t border-gray-200">
           DELETE MESSAGES
         </button>

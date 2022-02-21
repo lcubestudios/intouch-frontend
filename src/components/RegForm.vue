@@ -1,6 +1,7 @@
 <template>
 	<form @submit.prevent="userReg" class="flex flex-col p-4">
-		<div class="profile-icon-xl mx-auto mb-4">
+		<div class="mb-8">
+			<img class="mx-auto w-9/12" src="../assets/images/logo.png" alt="inTouch"/>
 		</div>
 		<div class="form-field">
 			<input v-model="first_name" id="first_name" name="first_name" class="my-2" type="text" placeholder="First Name" required />
@@ -19,7 +20,7 @@
 		</div>
 		<button type="submit" class="btn bg-primary text-white hover:bg-gray-700 mt-8">SIGN UP</button>
 		<div class="mt-4 text-center">
-			<small>Already have an account? <button class="text-primary" @click="toggleLoginForm()">LOGIN</button></small>
+			<small>Already have an account? <button class="text-primary" @click="toggleLoginForm()">LOG IN</button></small>
 		</div>
 	</form>
 </template>

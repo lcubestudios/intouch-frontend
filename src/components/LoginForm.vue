@@ -1,12 +1,13 @@
 <template>
 	<form @submit.prevent="userLogin" class="flex flex-col p-4">
-		<div class="profile-icon-xl mx-auto mb-4">
+		<div class="mb-8">
+			<img class="mx-auto w-9/12" src="../assets/images/logo.png" alt="inTouch"/>
 		</div>
 		<div class="form-field">
 			<input v-model="phone_number" id="phone_number" name="phone_number" class="my-2" type="text" placeholder="Phone number" required />
 		</div>
 		<div class="form-field">
-			<input v-model="password" id="password" name="password" class="my-2" type="password" placeholder="Password" required />
+			<input v-model="password" id="password" name="password" class="my-2" type="password" placeholder="Password" autocomplete="on" required />
 		</div>
 		<button type="submit" class="btn bg-primary text-white hover:bg-gray-700 mt-8">LOG IN</button>
 		<div class="mt-4 text-center">

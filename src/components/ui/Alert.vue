@@ -1,5 +1,5 @@
 <template>
-	<div id="alert" class="absolute z-[999999] inset-0 w-full h-full" @click="hideAlert">
+	<div id="alert" class="absolute z-50 inset-0 w-full h-full" @click="hideAlert">
 		<div class="absolute w-full h-full bg-black opacity-30"></div>
 		<div class="absolute bottom-0 h-min-100px h-max-1/2 bg-gray-200 px-6 pt-6 pb-24 rounded-t-lg left-1/2 transform -translate-x-1/2">
 			<div class="flex flex-col w-full h-full">
