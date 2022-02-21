@@ -1,16 +1,16 @@
 <template>
   <div class="flex flex-row flex-nowrap w-full bg-white h-80px border-b border-gray-200 cursor-pointer">
     <div class="w-full flex items-center justify-between px-4">
-      <div class="relative" @click="goToMessages(item.uid)">
+      <div class="relative" @click="goToMessages(item.phone_number)">
         <div class="profile-icon"></div>
         <span 
-          v-if="item.unread_count && item.unread_count > 0"
+          v-if="item.unread_count && item.unread !== '0'"
           class="absolute top-0 right-0 flex justify-center items-center w-5 h-5 rounded-full text-xs bg-alert text-white"
         >
           {{ item.unread_count }}
         </span>
       </div>
-      <div class="flex-1 text-left px-4" @click="goToMessages(item.uid)">
+      <div class="flex-1 text-left px-4" @click="goToMessages(item.phone_number)">
         {{ item.phone_number }}
       </div>
       <div v-if="!isToolbarVisible" class="flex items-center justify-center">
@@ -22,10 +22,10 @@
     <div v-if="isToolbarVisible" class="flex items-center justify-center">
       <button
         class="relative btn-icon bg-alert text-white flex items-center justify-center w-80px h-80px"
-        @click="deleteContact(item.uid)"
+        @click="deleteContact(item.phone_number)"
         v-click-outside="hideToolbar"
       >
-        <mdicon name="dots-delete" />
+        <mdicon name="delete" />
       </button>
     </div>
   </div>
@@ -55,12 +55,13 @@ export default {
     const hideToolbar = () => {
       isToolbarVisible.value = false
     }
-    const goToMessages = (uid) => {
+    const goToMessages = (phone_number) => {
       store.dispatch('setView', 'messages')
-      store.dispatch('setCurrContact', uid)
+      store.dispatch('setCurrContact', phone_number)
+      store.dispatch('getMessages', phone_number)
     }
-    const deleteContact = (uid) => {
-      store.dispatch('deleteContact', uid)
+    const deleteContact = (phone_number) => {
+      store.dispatch('deleteContact', phone_number)
     }
 
     return {

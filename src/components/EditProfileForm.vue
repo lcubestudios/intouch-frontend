@@ -8,7 +8,7 @@
 				<input v-model="first_name" id="first_name" name="first_name" class="my-2" type="text" placeholder="First Name" />
 				<input v-model="last_name" id="last_name" name="last_name" class="my-2" type="text" placeholder="Last Name" />
 			</div>
-			<button type="submit" class="btn block m-auto bg-primary text-white mt-8">ADD</button>
+			<button type="submit" class="btn block m-auto bg-primary text-white mt-8">SAVE</button>
 		</form>
 	</UiModal>
 </template>

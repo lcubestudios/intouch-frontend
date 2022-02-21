@@ -6,7 +6,7 @@
 				<header class="flex flex-row items-center">
 					<div class="w-40px h-40px"></div>
 					<div class="flex-1 text-center text-sm">{{ title }}</div>
-					<button class="btn-icon w-40px h-40px" @click="hideModal">X</button>
+					<button class="btn-icon w-40px h-40px" @click="hideModal"><mdicon name="close" /></button>
 				</header>
 				<section class="flex-1 p-4">
 					<slot />

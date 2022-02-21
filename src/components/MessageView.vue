@@ -1,18 +1,18 @@
 <template>
   <section class="w-full h-full flex flex-col">
-    <UiHeader title="xxx.xxx.xxxx">
+    <UiHeader :title="contactName">
       <template v-slot:left>
         <button @click="goToContacts" class="md:hidden">
           <mdicon name="arrow-left" />
         </button>
       </template>
       <template v-slot:dropdown>
-        <button class="dropdown-menu-item border-t border-gray-200">
-          DELETE MESSAGES
-        </button>
-        <button class="dropdown-menu-item border-t border-gray-200">
-          DELETE CONTACT
-        </button>
+				<button class="dropdown-menu-item border-t border-gray-200">
+					DELETE MESSAGES
+				</button>
+				<button class="dropdown-menu-item border-t border-gray-200">
+					DELETE CONTACT
+				</button>
       </template>
     </UiHeader>
     <main class="relative flex-1 overflow-hidden">
@@ -27,7 +27,7 @@
       </div>
     </main>
     <UiFooter class="justify-center">
-      <NewMessageForm />
+      <NewMessageForm v-if="currContact" />
     </UiFooter>
   </section>
 </template>
@@ -59,11 +59,18 @@ export default {
 			return store.getters.currContact
 		})
 
+		const contactName = computed(() => {
+			return currContact.value || 'SELECT CONTACT TO VIEW MESSAGES'
+		})
+
+		console.log(currContact.value)
+
     return {
       profile,
 			currContact,
       showNewContactModal,
-			goToContacts
+			goToContacts,
+			contactName
     }
   },
 }

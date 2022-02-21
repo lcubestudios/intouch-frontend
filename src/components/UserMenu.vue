@@ -7,6 +7,7 @@
     </header>
     <button class="dropdown-menu-item border-t border-gray-200" @click="showEditProfileModal">EDIT PROFILE</button>
     <button class="dropdown-menu-item border-t border-gray-200" @click="userLogout">LOG OUT</button>
+    <button class="dropdown-menu-item border-t border-gray-200" @click="getContacts">GET CONTACTS</button>
   </div>
 </template>
 
@@ -27,14 +28,18 @@ export default {
     }
 
     const showEditProfileModal = () => {
-			console.log('test')
       store.dispatch('showModal', 'EditProfile')
+    }
+
+    const getContacts = () => {
+      store.dispatch('getContacts')
     }
 
 		return {
       profile,
 			userLogout,
       showEditProfileModal,
+			getContacts
 		}
 	},
 }

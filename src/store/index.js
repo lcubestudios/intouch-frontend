@@ -13,7 +13,7 @@ const state = () => {
 		isAlertVisible: false,
 		alertMessage: null,
 		currView: 'contacts',
-		currContact: null,
+		currContact: [],
 		contacts: [],
 		messages: [],
 	}
@@ -63,7 +63,7 @@ const actions = {
 		return await axios
 			.post(
 				`http://demo-dev.lcubestudios.io/intouch-backend/auth.php?purpose=reg`,
-				payload, 
+				payload,
 				{
 					headers: {
 						'Content-Type': 'text/json'
@@ -90,7 +90,7 @@ const actions = {
 		return await axios
 			.post(
 				`http://demo-dev.lcubestudios.io/intouch-backend/auth.php?purpose=login`, 
-				payload, 
+				payload,
 				{
 					headers: {
 						'Content-Type': 'text/json'
@@ -118,8 +118,8 @@ const actions = {
 	userLogout({ commit }) {
 		commit('setProfile', null)
 		commit('setContacts', [])
-		commit('setCurrContact', null)
-		commit('setMessages', null)
+		commit('setCurrContact', [])
+		commit('setMessages', [])
 	},
 	showModal({ commit }, id) {
 		commit('setModalVisibility', { id, val: true })
@@ -139,38 +139,125 @@ const actions = {
 	},
 	setCurrContact({ commit }, val) {
 		commit('setCurrContact', val)
-		commit('setMessages', [])
 	},
-	async getContacts({ dispatch },token) {
+	setContacts({ commit }, data) {
+		commit('setContacts', data)
+	},
+	async getContacts({ state, dispatch, commit }) {
 		await axios.get(
 			'http://demo-dev.lcubestudios.io/intouch-backend/contacts.php',
-			{ token },
 			{
 				headers: {
 					'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + state.profile.token
 				}
 			}
 		)
 		.then(({ data }) => {
-			console.log(data)
+			if (data.status_code !== 200) {
+				dispatch('showAlert', data.message)
+				return false
+			}
+			else {
+				commit('setContacts', data.contacts)
+
+				return true
+			}
 		})
 		.catch((err) => {
 			console.log(err)
 			dispatch('showAlert', 'An error has occured. Please try again later.')
 			return false
 		})
-
-		// commit('setContacts', contacts)
-		// commit('setCurrContact', uid)
-		// commit('setMessages', messages)
 	},
-	setContacts({ commit }, data) {
-		commit('setContacts', data)
-	},
-	deleteContact({ state, commit }, uid) {
-		const newContacts = state.contacts.filter(contact => contact.uid !== uid)
+	async deleteContact({ state, dispatch, commit }, phone_number) {
+		const newContacts = state.contacts.filter(contact => contact.phone_number !== phone_number)
 
-		commit('setContacts', newContacts)
+		await axios
+			.delete(
+				'http://demo-dev.lcubestudios.io/intouch-backend/contacts.php',
+				{
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': 'Bearer ' + state.profile.token
+					},
+					data: { phone_number }
+				}
+			)
+			.then(({ data }) => {
+				if (data.status_code !== 200) {
+					dispatch('showAlert', data.message)
+					return false
+				}
+				else {
+					commit('setContacts', newContacts)
+					return true
+				}
+			})
+			.catch((err) => {
+				console.log(err)
+				dispatch('showAlert', 'An error has occured. Please try again later.')
+				return false
+			})
+	},
+	async addContact({ state, dispatch }, payload) {
+		return await axios
+			.post(
+				`http://demo-dev.lcubestudios.io/intouch-backend/contacts.php`, 
+				payload,
+				{
+					headers: {
+						'Content-Type': 'text/json',
+						'Authorization': 'Bearer ' + state.profile.token
+					}
+				}
+			)
+			.then(({ data }) => {	
+				if (data.status_code !== 200) {
+					dispatch('showAlert', data.message)
+					return false
+				}
+				else {
+					dispatch('getContacts', state.profile.token)
+					return true
+				}
+			})
+			.catch((err) => {
+				console.log(err)
+				dispatch('showAlert', 'An error has occured. Please try again later.')
+				return false
+			})
+	},
+	setMessages({ commit }, val) {
+		commit('setMessages', val)
+	},
+	async getMessages({ state, dispatch, commit }, phone_number) {
+		await axios.get(
+			'http://demo-dev.lcubestudios.io/intouch-backend/messages.php',
+			{ params: { phone_number } },
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + state.profile.token
+				}
+			}
+		)
+		.then(({ data }) => {
+			if (data.status_code !== 200) {
+				dispatch('showAlert', data.message)
+				return false
+			}
+			else {
+				commit('setMessages', data.messages)
+
+				return true
+			}
+		})
+		.catch((err) => {
+			console.log(err)
+			dispatch('showAlert', 'An error has occured. Please try again later.')
+			return false
+		})
 	},
 	sendMessage({ state }, body) {
 		const isLastSender = state.messages[state.messages.length - 1].isSender
@@ -188,32 +275,32 @@ const actions = {
 		}
 	},
 	async updateProfile({ state, dispatch, commit }, payload) {
-		await axios.post(
-			'http://demo-dev.lcubestudios.io/intouch-backend/profile.php',
-			payload,
-			{
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': 'Bearer ' + state.profile.token
+		await axios
+			.put(
+				'http://demo-dev.lcubestudios.io/intouch-backend/profile.php',
+				payload,
+				{
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': 'Bearer ' + state.profile.token
+					}
 				}
-			}
-		)
-		.then(({ data }) => {
-			console.log(data)
-			if (data.status_code !== 200) {
-				dispatch('showAlert', data.message)
+			)
+			.then(({ data }) => {
+				if (data.status_code !== 200) {
+					dispatch('showAlert', data.message)
+					return false
+				}
+				else {
+					commit('setProfile', data.profile)
+					return true
+				}
+			})
+			.catch((err) => {
+				console.log(err)
+				dispatch('showAlert', 'An error has occured. Please try again later.')
 				return false
-			}
-			else {
-				commit('setProfile', data.profile)
-				return true
-			}
-		})
-		.catch((err) => {
-			console.log(err)
-			dispatch('showAlert', 'An error has occured. Please try again later.')
-			return false
-		})
+			})
 	}
 }
 

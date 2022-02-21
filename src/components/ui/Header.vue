@@ -7,16 +7,16 @@
       {{ title }}
     </div>
     <div class="flex justify-center items-center w-toolbar text-center px-2">
-      <button v-if="isDropdownVisible" @click="hideDropdown">
-        <mdicon name="chevron-up" />
-      </button>
-      <button v-else @click="showDropdown"><mdicon name="chevron-down" /></button>
+			<button v-if="isDropdownVisible" @click="hideDropdown">
+				<mdicon name="chevron-up" />
+			</button>
+			<button v-else @click="showDropdown"><mdicon name="chevron-down" /></button>
     </div>
     <div
       v-if="isDropdownVisible"
       v-click-outside="hideDropdown"
       class="min-w-150px absolute right-0 bottom-0 transform translate-y-full bg-white text-black text-xs text-center
-       order border-gray-200"
+       border border-gray-200"
       >
       <slot name="dropdown"> </slot>
     </div>

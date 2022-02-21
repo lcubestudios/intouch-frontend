@@ -5,9 +5,9 @@
 	>
 		<form @submit.prevent="addNewContact" class="pt-10 pb-16">
 			<div class="form-field">
-				<input v-model="phone_number" id="phone_number" name="phone_number" class="my-2 bg-gray-300" type="text" placeholder="Phone number..." />
+				<input v-model="phone_number" id="phone_number" name="phone_number" class="my-2" type="text" placeholder="Phone number..." />
 			</div>
-			<button type="submit" class="btn block m-auto bg-gray-600 text-white hover:bg-gray-700 mt-8">ADD</button>
+			<button type="submit" class="btn block m-auto bg-primary text-white mt-8">ADD</button>
 		</form>
 	</UiModal>
 </template>
@@ -22,7 +22,10 @@ export default {
 		const store = useStore()
 		const phone_number = ref('')
 		const addNewContact = () => {
-			store.dispatch('getContacts')
+			const payload = {
+				phone_number: phone_number.value
+			}
+			store.dispatch('addContact', payload)
 			store.dispatch('hideModal', 'NewContact')
 		}
 
