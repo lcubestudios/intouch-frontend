@@ -2,9 +2,9 @@
 	<div 
 		class="mb-4 p-4 rounded-lg" 
 		:class="{
-			'bg-gray-200': isSender,
+			'bg-white': isSender,
 			'rounded-tr-none': isSender,
-			'bg-gray-400': !isSender,
+			'bg-gray-001': !isSender,
 			'rounded-tl-none': !isSender,
 		}"
 	>

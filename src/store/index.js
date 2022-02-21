@@ -137,8 +137,9 @@ const actions = {
 	setView({ commit }, val) {
 		commit('setCurrView', val)
 	},
-	setCurrContact({ commit }, val) {
-		commit('setCurrContact', val)
+	setCurrContact({ state, commit }, phone_number) {
+		const contact = state.contacts.filter(contact => contact.phone_number === phone_number)[0]
+		commit('setCurrContact', contact)
 	},
 	setContacts({ commit }, data) {
 		commit('setContacts', data)
@@ -234,8 +235,8 @@ const actions = {
 	async getMessages({ state, dispatch, commit }, phone_number) {
 		await axios.get(
 			'http://demo-dev.lcubestudios.io/intouch-backend/messages.php',
-			{ params: { phone_number } },
-			{
+			{ 
+				params: { phone_number },
 				headers: {
 					'Content-Type': 'application/json',
 					'Authorization': 'Bearer ' + state.profile.token
@@ -259,20 +260,33 @@ const actions = {
 			return false
 		})
 	},
-	sendMessage({ state }, body) {
-		const isLastSender = state.messages[state.messages.length - 1].isSender
+	async sendMessage({ state, dispatch }, payload) {
+		await axios.post(
+			'http://demo-dev.lcubestudios.io/intouch-backend/messages.php',
+			payload,
+			{ 
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + state.profile.token
+				}
+			}
+		)
+		.then(({ data }) => {
+			if (data.status_code !== 200) {
+				dispatch('showAlert', data.message)
+				return false
+			}
+			else {
+				dispatch('getMessages', state.currContact.phone_number)
 
-		if (isLastSender) {
-			state.messages[state.messages.length - 1].messages.push({ body })
-		}
-		else {
-			state.messages.push({
-				isSender: true,
-				messages: [{
-					body
-				}]
-			})
-		}
+				return true
+			}
+		})
+		.catch((err) => {
+			console.log(err)
+			dispatch('showAlert', 'An error has occured. Please try again later.')
+			return false
+		})
 	},
 	async updateProfile({ state, dispatch, commit }, payload) {
 		await axios
@@ -333,7 +347,7 @@ const getters = {
 		return state.alertMessage
 	},
 	currContact(state) {
-		return state.contacts.filter(contact => contact.uid === state.currContact)[0]
+		return state.currContact
 	},
 	contacts(state) {
 		return state.contacts

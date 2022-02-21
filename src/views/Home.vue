@@ -37,8 +37,6 @@ export default {
 			return store.getters.messages
 		})
 
-		console.log(messages.value)
-
 		return {
 			currView,
 			contacts,

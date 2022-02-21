@@ -1,13 +1,11 @@
 <template>
 	<div class="w-full">
-		<div v-if="item.isSender" class="flex flex-row flex-nowrap mb-2">
+		<div v-if="item.is_sender" class="flex flex-row flex-nowrap mb-2">
 			<div class="invisible profile-icon mr-4"></div>
 			<div class="flex-1">
 				<MessageBubble 
-					v-for="(message, ndx) in item.messages"
-					:key="ndx"
-					:isSender="item.isSender"
-					:body="message.body"
+					:isSender="item.is_sender"
+					:body="item.body_text"
 				/>
 			</div>
 		</div>
@@ -15,10 +13,8 @@
 			<div class="profile-icon mr-4"></div>
 			<div class="flex-1">
 				<MessageBubble 
-					v-for="(message, ndx) in item.messages"
-					:key="ndx"
-					:isSender="item.isSender"
-					:body="message.body"
+					:isSender="item.is_sender"
+					:body="item.body_text"
 				/>
 			</div>
 			<div class="invisible profile-icon ml-4"></div>

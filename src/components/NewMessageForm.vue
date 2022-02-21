@@ -25,7 +25,10 @@ export default {
     const store = useStore()
     const body = ref('')
     const sendMessage = () => {
-      store.dispatch('sendMessage', body.value)
+      store.dispatch('sendMessage', {
+				phone_number: store.getters.currContact.phone_number,
+				body_text: body.value
+			})
     }
 
     return {

@@ -10,7 +10,7 @@
 				<button class="dropdown-menu-item border-t border-gray-200">
 					DELETE MESSAGES
 				</button>
-				<button class="dropdown-menu-item border-t border-gray-200">
+				<button class="dropdown-menu-item border-t border-gray-200" @click="deleteContact">
 					DELETE CONTACT
 				</button>
       </template>
@@ -27,7 +27,7 @@
       </div>
     </main>
     <UiFooter class="justify-center">
-      <NewMessageForm v-if="currContact" />
+      <NewMessageForm v-if="currContact"/>
     </UiFooter>
   </section>
 </template>
@@ -60,16 +60,24 @@ export default {
 		})
 
 		const contactName = computed(() => {
-			return currContact.value || 'SELECT CONTACT TO VIEW MESSAGES'
+			return currContact.value.first_name && currContact.value.last_name
+				? currContact.value.first_name + ' ' + currContact.value.last_name
+				: 'SELECT CONTACT TO VIEW MESSAGES'
 		})
-
-		console.log(currContact.value)
+		
+		const deleteContact = async () => {
+			await store.dispatch('deleteContact', currContact.value.phone_number)
+			await store.dispatch('setCurrContact', [])
+			await store.dispatch('setMessages', [])
+			location.reload();
+		}
 
     return {
       profile,
 			currContact,
       showNewContactModal,
 			goToContacts,
+			deleteContact,
 			contactName
     }
   },
