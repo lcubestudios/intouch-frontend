@@ -1,38 +1,63 @@
-pipeline {
-    agent { label 'lcubes-demo-server' }
-
-    options {
-    buildDiscarder(logRotator(numToKeepStr: '5'))
-    }
-
+pipeline{
+    agent { label 'frontend-node' }
+    tools { nodejs 'node-14.18.3' }
+    
     environment {
-        DOCKER_CRED = credentials('lcubestudio-docker')
+        REPO_NAME = 'intouch-frontend'
+        
+        //Frontend
+        NODE_ENV='${BRANCH_NAME}'
+        BASE_URL='https://${BRANCH_NAME}.lcubestudios.io/${REPO_NAME}/dist/'
+                
+        //Static
+        //Extra Configs
+        APACHE_DIR = '/var/www/html'
+        SNYK_ID = 'lcube-snyk-token'
+        JK_WORKSPACE = '/var/www/jenkins/workspace'
     }
-    stages {
-        stage('Init') {
-            steps{
-                echo "initiation"
-               
-            }        
+   stages{
+        stage("build") {
+            steps {
+                echo "building the application on ${NODE_NAME}."
+                slackSend color: "warning", message: "Starting build process for ${REPO_NAME} from ${BRANCH_NAME} branch..."
+                sh "if [ ! -d ${APACHE_DIR}/${BRANCH_NAME}/${REPO_NAME}/ ]; then mkdir -p ${APACHE_DIR}/${BRANCH_NAME}/${REPO_NAME}/; fi"
+                sh "rsync -Puqr --delete-during ${JK_WORKSPACE}/${REPO_NAME}_${BRANCH_NAME}/ ${APACHE_DIR}/${BRANCH_NAME}/${REPO_NAME}/"
+                sh "cd ${APACHE_DIR}/${BRANCH_NAME}/${REPO_NAME} && yarn && yarn generate"
+                slackSend color: "good", message: "Success building the application."
+            }
         }
-        stage('Build') {
-            steps{
-                echo "building"
-            }        
+        stage("scan") {
+            steps {
+                echo 'Scanning code for vulnerabilities.'
+                slackSend color: "warning", message: "Scanning code for vulnerabilities on ${REPO_NAME}/${BRANCH_NAME}..."
+                snykSecurity(
+                    snykInstallation: 'snyk-latest',
+                    snykTokenId: "${SNYK_ID}",
+                    failOnIssues: "false",
+                )
+                slackSend color: "good", message: "Success scanning the code."
+            }
         }
-        stage('Jenkins') {
-            steps{
-                echo "jenkins"
-                sh 'if [ ! -d /var/www/html/staging/intouch-frontend/ ]; then mkdir -p /var/www/html/staging/intouch-frontend/; fi'
-                sh "rsync -uqr --delete-during /var/www/jenkins/workspace/intouch-frontend_staging/ /var/www/html/staging/intouch-frontend/"
-                sh 'docker exec apache2 /bin/bash -ci "yarn install && cd /var/www/html/staging/intouch-frontend/ && yarn && yarn build"'
-                //sh "chmod 755 -R /var/www/html/staging/intouch-frontend/"
-            }        
+        stage("deploy") {
+            when{
+                expression{
+                    BRANCH_NAME == "master"
+                }
+            }
+            steps {
+                echo 'deploying the application.'
+                slackSend color: "warning", message: "Deploying the application..."
+            }
         }
     }
     post {
-        always{
-            echo 'Login Out of the Account'
+        success {
+            echo 'The pipeline completed successfully.'
+            slackSend color: "good", message: "The pipeline completed successfully. https://${BRANCH_NAME}.lcubestudios.io/${REPO_NAME}/dist/"
         }
-    }
+        failure {
+            echo 'pipeline failed, at least one step failed'
+            slackSend color: "danger", message: "Pipeline failed, at least one step failed. Check Jenkins console https://jenkins.lcubestudios.io/job/${REPO_NAME}/job/${BRANCH_NAME}/"
+        }
+    }      
 }
