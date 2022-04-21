@@ -2,7 +2,6 @@
 @import './_config.css';
 @import './_global.css';
 
-
 #messaging-app {
 	width: 100%;
 	height: 100%;
@@ -35,7 +34,6 @@
 }
 
 [class*="profile-icon"] {
-	background-color: var(--color-primary);
 	border-radius: 100%;
 }
 

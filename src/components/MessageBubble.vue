@@ -1,6 +1,6 @@
 <template>
 	<div 
-		class="mb-4 p-4 rounded-lg" 
+		class="mb-4 p-4 rounded-lg break-all" 
 		:class="{
 			'bg-white': isSender,
 			'rounded-tr-none': isSender,

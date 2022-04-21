@@ -2,7 +2,7 @@
   <div class="flex flex-row flex-nowrap w-full bg-white h-80px border-b border-gray-200 cursor-pointer">
     <div class="w-full flex items-center justify-between px-4">
       <div class="relative" @click="goToMessages(item.phone_number)">
-        <div class="profile-icon"></div>
+        <div class="profile-icon bg-primary"></div>
         <span 
           v-if="item.unread && item.unread !== '0'"
           class="absolute top-0 right-0 flex justify-center items-center w-5 h-5 rounded-full text-xs bg-alert text-white"

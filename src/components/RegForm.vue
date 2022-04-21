@@ -1,8 +1,5 @@
 <template>
-	<form @submit.prevent="userReg" class="flex flex-col p-4">
-		<div class="mb-8">
-			<img class="mx-auto w-9/12" src="../assets/images/logo.png" alt="inTouch"/>
-		</div>
+	<form @submit.prevent="userReg" class="flex flex-col">
 		<div class="form-field">
 			<input v-model="first_name" id="first_name" name="first_name" class="my-2" type="text" placeholder="First Name" required />
 		</div>

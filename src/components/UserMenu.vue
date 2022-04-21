@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="py-4">
-      <div class="profile-icon mx-auto mb-2"></div>
+      <div class="profile-icon bg-primary mx-auto mb-2"></div>
 			<div class="mb-1"><span>{{ profile?.first_name }} {{ profile?.last_name }}</span></div>
       <div><span>{{ profile?.phone_number }}</span></div>
     </header>

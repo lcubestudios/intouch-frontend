@@ -29,6 +29,8 @@ export default {
 				phone_number: store.getters.currContact.phone_number,
 				body_text: body.value
 			})
+
+			body.value = ''
     }
 
     return {

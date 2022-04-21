@@ -3,6 +3,8 @@ import createPersistedState from 'vuex-persistedstate'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
+const api_url = process.env.VUE_APP_API_URL
+
 const state = () => {
 	return {
 		route: 'Home',
@@ -62,7 +64,7 @@ const actions = {
 	async userReg({ dispatch, commit }, payload) {
 		return await axios
 			.post(
-				`http://demo-dev.lcubestudios.io/intouch-backend/auth.php?purpose=reg`,
+				api_url + `/auth.php?purpose=reg`,
 				payload,
 				{
 					headers: {
@@ -89,7 +91,7 @@ const actions = {
 	async userLogin({ dispatch, commit }, payload) {
 		return await axios
 			.post(
-				`http://demo-dev.lcubestudios.io/intouch-backend/auth.php?purpose=login`, 
+				api_url + '/auth.php?purpose=login', 
 				payload,
 				{
 					headers: {
@@ -98,13 +100,14 @@ const actions = {
 				}
 			)
 			.then(({ data }) => {	
+				console.log(data.status_code)
 				if (data.status_code !== 200) {
 					dispatch('showAlert', data.message)
 					return false
 				}
 				else {
-					commit('setProfile', data.profile)
-					dispatch('getContacts', data.profile.token)
+					commit('setProfile', data.results)
+					dispatch('getContacts', data.results.token)
 
 					return true
 				}
@@ -146,7 +149,7 @@ const actions = {
 	},
 	async getContacts({ state, dispatch, commit }) {
 		await axios.get(
-			'http://demo-dev.lcubestudios.io/intouch-backend/contacts.php',
+			api_url + '/contacts.php',
 			{
 				headers: {
 					'Content-Type': 'application/json',
@@ -176,7 +179,7 @@ const actions = {
 
 		await axios
 			.delete(
-				'http://demo-dev.lcubestudios.io/intouch-backend/contacts.php',
+				api_url + '/contacts.php',
 				{
 					headers: {
 						'Content-Type': 'application/json',
@@ -204,7 +207,7 @@ const actions = {
 	async addContact({ state, dispatch }, payload) {
 		return await axios
 			.post(
-				`http://demo-dev.lcubestudios.io/intouch-backend/contacts.php`, 
+				api_url + '/contacts.php', 
 				payload,
 				{
 					headers: {
@@ -234,7 +237,7 @@ const actions = {
 	},
 	async getMessages({ state, dispatch, commit }, phone_number) {
 		await axios.get(
-			'http://demo-dev.lcubestudios.io/intouch-backend/messages.php',
+			api_url + '/messages.php',
 			{ 
 				params: { phone_number },
 				headers: {
@@ -262,7 +265,7 @@ const actions = {
 	},
 	async sendMessage({ state, dispatch }, payload) {
 		await axios.post(
-			'http://demo-dev.lcubestudios.io/intouch-backend/messages.php',
+			api_url + '/messages.php',
 			payload,
 			{ 
 				headers: {
@@ -291,7 +294,7 @@ const actions = {
 	async deleteMessages({ state, dispatch, commit }, phone_number) {
 		await axios
 			.delete(
-				'http://demo-dev.lcubestudios.io/intouch-backend/messages.php',
+				api_url + '/messages.php',
 				{
 					headers: {
 						'Content-Type': 'application/json',
@@ -319,7 +322,7 @@ const actions = {
 	async updateProfile({ state, dispatch, commit }, payload) {
 		await axios
 			.put(
-				'http://demo-dev.lcubestudios.io/intouch-backend/profile.php',
+				api_url + '/profile.php',
 				payload,
 				{
 					headers: {

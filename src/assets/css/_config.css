@@ -9,4 +9,12 @@
 	--color-alert: #FA3E3E;
 
 	--toolbar-height: 60px;
+
+	--font-size-base: 22px;
+	--font-size-h1: 1.875em;
+	--font-size-h2: 1.5em;
+	--font-size-h3: 1.275em;
+	--font-size-h4: 1.125em;
+	--font-size-h5: 1em;
+	--font-size-h6: 0.825em;
 }

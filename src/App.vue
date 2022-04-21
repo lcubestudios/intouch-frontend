@@ -29,6 +29,8 @@ export default {
 			return store.getters.isAuthenticated
 		})
 
+		store.dispatch('setRoute', 'Home')
+
 		if (isAuthenticated.value && currentView.value === 'Auth') store.dispatch('setRoute', 'Home')
 		else if (!isAuthenticated.value && currentView.value !== 'Auth') store.dispatch('setRoute', 'Auth')
 

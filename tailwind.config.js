@@ -13,7 +13,7 @@ module.exports = {
         'gray-000': 'var(--color-gray)',
         'gray-001': 'var(--color-dark-gray)',
         'background': 'var(--color-background)',
-        'primary': 'var(--color-primary)',
+        'primary': process.env.VUE_APP_PRIMARY_COLOR || 'var(--color-primary)',
         'alert': 'var(--color-alert)',
       },
       padding: {
