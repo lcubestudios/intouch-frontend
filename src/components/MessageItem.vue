@@ -10,7 +10,7 @@
 			</div>
 		</div>
 		<div v-else class="flex flex-row flex-nowrap mb-2">
-			<div class="profile-icon mr-4"></div>
+			<div class="profile-icon bg-primary mr-4"></div>
 			<div class="flex-1">
 				<MessageBubble 
 					:isSender="item.is_sender"

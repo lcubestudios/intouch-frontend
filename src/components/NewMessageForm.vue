@@ -10,6 +10,7 @@
       type="text"
       class="flex-1 h-full rounded-full border border-gray-200 px-4 text-sm text-black"
       placeholder="Send a message..."
+			required
     />
     <button type="submit" class="ml-4"><mdicon name="send" /></button>
   </form>
