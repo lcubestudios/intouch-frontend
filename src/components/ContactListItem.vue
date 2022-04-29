@@ -10,7 +10,7 @@
           {{ item.unread }}
         </span>
       </div>
-      <div class="flex-1 text-left px-4" @click="goToMessages(item.phone_number)">
+      <div class="flex-1 text-left px-4 select-none" @click="goToMessages(item.phone_number)">
         {{ item.phone_number }}
       </div>
       <div v-if="!isToolbarVisible" class="flex items-center justify-center">

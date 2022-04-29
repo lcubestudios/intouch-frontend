@@ -45,3 +45,10 @@ input {
 }
 
 button { cursor: pointer; }
+
+/* Stop input zoom on focus */
+@media screen and (max-width: 767px) {
+  input, select, textarea {
+    font-size: 16px;
+  }
+}

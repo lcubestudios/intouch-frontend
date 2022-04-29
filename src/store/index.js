@@ -100,7 +100,6 @@ const actions = {
 				}
 			)
 			.then(({ data }) => {	
-				console.log(data.status_code)
 				if (data.status_code !== 200) {
 					dispatch('showAlert', data.message)
 					return false
@@ -141,7 +140,7 @@ const actions = {
 		commit('setCurrView', val)
 	},
 	setCurrContact({ state, commit }, phone_number) {
-		const contact = state.contacts.filter(contact => contact.phone_number === phone_number)[0]
+		const contact = state.contacts.filter(contact => contact.phone_number === phone_number)[0] || []
 		commit('setCurrContact', contact)
 	},
 	setContacts({ commit }, data) {
@@ -174,9 +173,7 @@ const actions = {
 			return false
 		})
 	},
-	async deleteContact({ state, dispatch, commit }, phone_number) {
-		const newContacts = state.contacts.filter(contact => contact.phone_number !== phone_number)
-
+	async deleteContact({ state, dispatch }, phone_number) {
 		await axios
 			.delete(
 				api_url + '/contacts.php',
@@ -194,7 +191,7 @@ const actions = {
 					return false
 				}
 				else {
-					commit('setContacts', newContacts)
+					dispatch('getContacts')
 					return true
 				}
 			})
@@ -222,7 +219,7 @@ const actions = {
 					return false
 				}
 				else {
-					dispatch('getContacts', state.profile.token)
+					dispatch('getContacts')
 					return true
 				}
 			})

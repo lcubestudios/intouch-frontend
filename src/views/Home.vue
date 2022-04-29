@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, onUnmounted } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
@@ -37,11 +37,18 @@ export default {
 			return store.getters.messages
 		})
 
+		onUnmounted(() => {
+			store.dispatch('setView', 'contacts')
+		})
+
 		return {
 			currView,
 			contacts,
 			messages,
 		}
 	},
+	beforeMount() {
+
+	}
 }
 </script>

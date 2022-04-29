@@ -1,5 +1,5 @@
 <template>
-	<div class="relative w-screen h-screen overflow-scroll">
+	<div class="relative w-screen h-screen">
 		<component :is="'View' + currentView"></component>
 		<UiAlert 
 			v-if="hasAlert"

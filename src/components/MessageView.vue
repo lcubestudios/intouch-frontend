@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, watch, onMounted } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
@@ -54,6 +54,8 @@ export default {
     }
 		const goToContacts = () => {
 			store.dispatch('setView', 'contacts')
+			store.dispatch('setCurrContact', null)
+			store.dispatch('setMessages', [])
 		}
 		const currContact = computed(() => {
 			return store.getters.currContact
@@ -75,6 +77,29 @@ export default {
 		const deleteMessages = async () => {
 			await store.dispatch('deleteMessages', currContact.value.phone_number)
 		}
+
+		const getMessages = () => {
+			console.log('reloading messages')
+			store.dispatch('getMessages', currContact.value.phone_number)
+		}
+
+		let reloadMessage
+
+		watch(currContact, (newVal) => {
+			if (newVal?.phone_number) {
+				reloadMessage = setInterval(getMessages, 3000)
+			}
+			else {
+				console.log('stop message reload')
+				clearInterval(reloadMessage)
+			}
+		})
+
+		onMounted(() => {
+			if (currContact.value?.phone_number) {
+				reloadMessage = setInterval(getMessages, 3000)
+			}
+		})
 
     return {
       profile,
