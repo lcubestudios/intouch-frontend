@@ -4,14 +4,15 @@ pipeline{
     
     environment {
         //Mandatory
-        REPO_NAME = 'intouch-frontend' // repo-name
+        REPO_NAME = 'messagingapp-frontend' // repo-name
         PACKAGE_MANAGER = 'yarn' // yarn
         BUILD_COMMAND = 'yarn build'  // yarn generate
         //Enviroment Varibles below:
         
         //ENV_NAME = 'value'
-				BASE_URL='/intouch-frontend/'
-				SITE_TITLE='inTouch | powered by LCube Studios'
+				VUE_APP_BASE_URL='/messagingapp-frontend/'
+				VUE_APP_API_URL='https://api.lcubestudios.io/master/messagingapp-api'
+				VUE_APP_SITE_TITLE='Messaging App | powered by LCube Studios'
 
         //SECRET ENV will need to be added to Jenkins to be able to use them
         
