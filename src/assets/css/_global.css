@@ -1,0 +1,54 @@
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+
+html, body {
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+	background: var(--color-background);
+	color: var(--color-black);
+	/* background-color: var(--primary-bgcolor);
+	color: var(--primary-textcolor);
+	font-family: var(--font-family);
+	font-size: var(--base-font-size);
+	line-height: var(--base-line-height);
+	font-weight: var(--base-font-weight); */
+	overflow: hidden;
+}
+
+@media (max-height: 600px) {
+	html { overflow-y: auto; }
+}
+
+@media (max-width: 516px) {
+	html, body {
+		height: -moz-available;          /* WebKit-based browsers will ignore this. */
+		height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+		height: fill-available;
+		min-height: 100vmax;
+	}
+}
+
+ol,
+ul { padding: 0; }
+
+input {
+	width: 100%;
+	border: 0;
+	outline: 0;
+	background-color: var(--color-white);
+}
+
+button { cursor: pointer; }
+
+/* Stop input zoom on focus */
+@media screen and (max-width: 767px) {
+  input, select, textarea {
+    font-size: 16px;
+  }
+}
