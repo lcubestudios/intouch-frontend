@@ -8,7 +8,7 @@
 					<h2 class="text- font-medium mt-2">SOMETHING WENT WRONG</h2>
 				</header>
 				<section class="flex-1 mt-12 text-alert">
-					{{ message || 'An error has occured! Please try again later.' }}
+					{{ message }}
 				</section>
 			</div>
 		</div>

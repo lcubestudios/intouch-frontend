@@ -12,13 +12,12 @@
 			:class="{
 				'hidden': currView !== 'messages'
 			}"
-			:messages="messages"
 		/>
 	</div>
 </template>
 
 <script>
-import { computed, onUnmounted } from 'vue'
+import { computed, onMounted, onUnmounted } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
@@ -33,18 +32,25 @@ export default {
 		const contacts = computed(() => {
 			return store.getters.contacts
 		})
-		const messages = computed(() => {
-			return store.getters.messages
+
+		const getContacts = () => {
+			store.dispatch('getContacts')
+		}
+
+		let reloadContacts
+
+		onMounted(() => {
+			reloadContacts = setInterval(getContacts, 2000)
 		})
 
 		onUnmounted(() => {
+			clearInterval(reloadContacts)
 			store.dispatch('setView', 'contacts')
 		})
 
 		return {
 			currView,
 			contacts,
-			messages,
 		}
 	},
 	beforeMount() {

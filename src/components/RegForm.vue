@@ -7,7 +7,7 @@
 			<input v-model="last_name" id="last_name" name="last_name" class="my-2" type="text" placeholder="Last Name" required />
 		</div>
 		<div class="form-field">
-			<input v-model="phone_number" id="phone_number" name="phone_number" class="my-2" type="text" placeholder="Phone Number" required />
+			<input v-model="username" id="username" name="username" class="my-2" type="text" placeholder="Username" required />
 		</div>
 		<div class="form-field">
 			<input v-model="password" id="password" name="password" class="my-2" type="password" placeholder="Password" autocomplete="on" required />
@@ -32,7 +32,7 @@ export default {
 		const store = useStore()
 		const first_name = ref('')
 		const last_name = ref('')
-		const phone_number = ref('')
+		const username = ref('')
 		const password = ref('')
 		const confirm_password = ref('')
 
@@ -44,7 +44,7 @@ export default {
 			const payload = {
 				first_name: first_name.value,
 				last_name: last_name.value,
-				phone_number: phone_number.value,
+				username: username.value,
 				password: password.value,
 			}
 
@@ -55,7 +55,7 @@ export default {
 				const reg = await store.dispatch('userReg', payload)
 
 				if (reg) {
-				store.dispatch('setRoute', 'Home')
+					store.dispatch('setRoute', 'Home')
 				}
 			}
 		}
@@ -65,7 +65,7 @@ export default {
 			userReg,
 			first_name,
 			last_name,
-			phone_number,
+			username,
 			password,
 			confirm_password
 		}

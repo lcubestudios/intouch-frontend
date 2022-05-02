@@ -1,6 +1,6 @@
 <template>
 	<div v-show="isVisible" :id="id" class="modal absolute z-40 inset-0 w-full h-full">
-		<div class="absolute w-full h-full bg-black opacity-20" @click="hideModal"></div>
+		<div class="absolute w-full h-full bg-white opacity-20" @click="hideModal"></div>
 		<div class="modal-content absolute bottom-0 left-0 right-0 w-full h-min-100px h-max-1/2 bg-gray-000 py-2">
 			<div class="flex flex-col w-full h-full">
 				<header class="flex flex-row items-center">

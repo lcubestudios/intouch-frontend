@@ -139,8 +139,8 @@ const actions = {
 	setView({ commit }, val) {
 		commit('setCurrView', val)
 	},
-	setCurrContact({ state, commit }, phone_number) {
-		const contact = state.contacts.filter(contact => contact.phone_number === phone_number)[0] || []
+	setCurrContact({ state, commit }, username) {
+		const contact = state.contacts.filter(contact => contact.username === username)[0] || []
 		commit('setCurrContact', contact)
 	},
 	setContacts({ commit }, data) {
@@ -173,7 +173,7 @@ const actions = {
 			return false
 		})
 	},
-	async deleteContact({ state, dispatch }, phone_number) {
+	async deleteContact({ state, dispatch }, username) {
 		await axios
 			.delete(
 				api_url + '/contacts.php',
@@ -182,7 +182,7 @@ const actions = {
 						'Content-Type': 'application/json',
 						'Authorization': 'Bearer ' + state.profile.token
 					},
-					data: { phone_number }
+					data: { username }
 				}
 			)
 			.then(({ data }) => {
@@ -232,11 +232,11 @@ const actions = {
 	setMessages({ commit }, val) {
 		commit('setMessages', val)
 	},
-	async getMessages({ state, dispatch, commit }, phone_number) {
+	async getMessages({ state, dispatch, commit }, username) {
 		await axios.get(
 			api_url + '/messages.php',
 			{ 
-				params: { phone_number },
+				params: { username },
 				headers: {
 					'Content-Type': 'application/json',
 					'Authorization': 'Bearer ' + state.profile.token
@@ -277,7 +277,7 @@ const actions = {
 				return false
 			}
 			else {
-				dispatch('getMessages', state.currContact.phone_number)
+				dispatch('getMessages', state.currContact.username)
 
 				return true
 			}
@@ -288,7 +288,7 @@ const actions = {
 			return false
 		})
 	},
-	async deleteMessages({ state, dispatch, commit }, phone_number) {
+	async deleteMessages({ state, dispatch, commit }, username) {
 		await axios
 			.delete(
 				api_url + '/messages.php',
@@ -297,7 +297,7 @@ const actions = {
 						'Content-Type': 'application/json',
 						'Authorization': 'Bearer ' + state.profile.token
 					},
-					data: { phone_number }
+					data: { username }
 				}
 			)
 			.then(({ data }) => {

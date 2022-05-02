@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row flex-nowrap w-full bg-white h-80px border-b border-gray-200 cursor-pointer">
     <div class="w-full flex items-center justify-between px-4">
-      <div class="relative" @click="goToMessages(item.phone_number)">
+      <div class="relative" @click="goToMessages(item.username)">
         <div class="profile-icon bg-primary"></div>
         <span 
           v-if="item.unread && item.unread !== '0'"
@@ -10,8 +10,8 @@
           {{ item.unread }}
         </span>
       </div>
-      <div class="flex-1 text-left px-4 select-none" @click="goToMessages(item.phone_number)">
-        {{ item.phone_number }}
+      <div class="flex-1 text-left px-4 select-none" @click="goToMessages(item.username)">
+        {{ item.username }}
       </div>
       <div v-if="!isToolbarVisible" class="flex items-center justify-center">
         <button class="relative btn-icon" @click="showToolbar">
@@ -22,7 +22,7 @@
     <div v-if="isToolbarVisible" class="flex items-center justify-center">
       <button
         class="relative btn-icon bg-alert text-white flex items-center justify-center w-80px h-80px"
-        @click="deleteContact(item.phone_number)"
+        @click="deleteContact(item.username)"
         v-click-outside="hideToolbar"
       >
         <mdicon name="delete" />
@@ -55,13 +55,13 @@ export default {
     const hideToolbar = () => {
       isToolbarVisible.value = false
     }
-    const goToMessages = (phone_number) => {
+    const goToMessages = (username) => {
       store.dispatch('setView', 'messages')
-      store.dispatch('setCurrContact', phone_number)
-      store.dispatch('getMessages', phone_number)
+      store.dispatch('setCurrContact', username)
+      store.dispatch('getMessages', username)
     }
-    const deleteContact = (phone_number) => {
-      store.dispatch('deleteContact', phone_number)
+    const deleteContact = (username) => {
+      store.dispatch('deleteContact', username)
     }
 
     return {

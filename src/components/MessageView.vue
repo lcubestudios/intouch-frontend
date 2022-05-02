@@ -16,7 +16,7 @@
       </template>
     </UiHeader>
     <main class="relative flex-1 overflow-hidden">
-      <div class="h-full overflow-scroll">
+      <div ref="responses" class="h-full overflow-scroll">
         <div class="flex flex-col p-4">
           <MessageItem
 						v-for="(message, ndx) in messages"
@@ -27,28 +27,30 @@
       </div>
     </main>
     <UiFooter class="justify-center">
-      <NewMessageForm v-if="currContact"/>
+      <NewMessageForm 
+				v-if="currContact"
+			/>
     </UiFooter>
   </section>
 </template>
 
 <script>
-import { computed, watch, onMounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
   name: 'MessageView',
-	props: {
-		messages: {
-			type: Object,
-			default: () => {}
-		}
-	},
   setup() {
+		const responses = ref(null)
     const store = useStore()
     const profile = computed(() => {
       return store.getters?.profile
     })
+
+		const messages = computed(() => {
+			return store.getters.messages
+		})
+
     const showNewContactModal = () => {
       store.dispatch('showModal', 'NewContact')
     }
@@ -68,25 +70,25 @@ export default {
 		})
 		
 		const deleteContact = async () => {
-			await store.dispatch('deleteContact', currContact.value.phone_number)
+			await store.dispatch('deleteContact', currContact.value.username)
 			await store.dispatch('setCurrContact', [])
 			await store.dispatch('setMessages', [])
 			location.reload();
 		}
 		
 		const deleteMessages = async () => {
-			await store.dispatch('deleteMessages', currContact.value.phone_number)
+			await store.dispatch('deleteMessages', currContact.value.username)
 		}
 
 		const getMessages = () => {
 			console.log('reloading messages')
-			store.dispatch('getMessages', currContact.value.phone_number)
+			store.dispatch('getMessages', currContact.value.username)
 		}
 
 		let reloadMessage
 
 		watch(currContact, (newVal) => {
-			if (newVal?.phone_number) {
+			if (newVal?.username) {
 				reloadMessage = setInterval(getMessages, 3000)
 			}
 			else {
@@ -95,20 +97,41 @@ export default {
 			}
 		})
 
+		let firstScroll = false
+
+		const scrollToBottom = () => {
+			responses.value.scrollTop = responses.value.scrollHeight
+		}
+
+		watch(messages, (newVal) => {
+			if (newVal.length > 0 && !firstScroll) {
+				scrollToBottom()
+				firstScroll = true
+			}
+		})
+
 		onMounted(() => {
-			if (currContact.value?.phone_number) {
+			if (currContact.value?.username) {
 				reloadMessage = setInterval(getMessages, 3000)
 			}
 		})
 
+		onUnmounted(() => {
+			clearInterval(reloadMessage)
+			firstScroll = false
+		})
+
     return {
       profile,
+			messages,
 			currContact,
       showNewContactModal,
 			goToContacts,
 			deleteContact,
 			deleteMessages,
-			contactName
+			scrollToBottom,
+			contactName,
+			responses
     }
   },
 }

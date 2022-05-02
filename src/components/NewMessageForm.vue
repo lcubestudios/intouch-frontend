@@ -22,14 +22,25 @@ import { useStore } from 'vuex'
 
 export default {
   name: "NewMessageForm",
-  setup() {
+	props: {
+		onSubmit: {
+			type: Function,
+			default: () => {}
+		}
+	},
+  setup(props) {
     const store = useStore()
     const body = ref('')
     const sendMessage = () => {
       store.dispatch('sendMessage', {
-				phone_number: store.getters.currContact.phone_number,
+				username: store.getters.currContact.username,
 				body_text: body.value
 			})
+
+			store.dispatch('getMessages')
+
+      props.onSubmit()
+
 
 			body.value = ''
     }
