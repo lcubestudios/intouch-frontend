@@ -31,16 +31,13 @@ export default {
   setup(props) {
     const store = useStore()
     const body = ref('')
-    const sendMessage = () => {
-      store.dispatch('sendMessage', {
+    const sendMessage = async () => {
+      await store.dispatch('sendMessage', {
 				username: store.getters.currContact.username,
 				body_text: body.value
 			})
 
-			store.dispatch('getMessages')
-
       props.onSubmit()
-
 
 			body.value = ''
     }

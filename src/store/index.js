@@ -117,6 +117,9 @@ const actions = {
 				return false
 			})
 	},
+	autoLogin({ commit }, payload) {
+		commit('setProfile', payload)
+	},
 	userLogout({ commit }) {
 		commit('setProfile', null)
 		commit('setContacts', [])
@@ -271,13 +274,13 @@ const actions = {
 				}
 			}
 		)
-		.then(({ data }) => {
+		.then(async ({ data }) => {
 			if (data.status_code !== 200) {
-				dispatch('showAlert', data.message)
+				await dispatch('showAlert', data.message)
 				return false
 			}
 			else {
-				dispatch('getMessages', state.currContact.username)
+				await dispatch('getMessages', state.currContact.username)
 
 				return true
 			}
