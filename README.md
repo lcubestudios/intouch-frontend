@@ -20,7 +20,7 @@ It is a white-label product that is flexible to color and logo customizations, o
 
 ⚙️ [Frontend Repository](https://github.com/lcubestudios/messagingapp-frontend)
 
-🗄 ️[Backend Repository](https://github.com/lcubestudios/messagingapp-backend)
+🗄 ️[Backend Repository](https://github.com/lcubestudios/messagingapp-api)
 
 🐳 [Docker Repository](https://github.com/lcubestudios/messagingapp-docker)
 
