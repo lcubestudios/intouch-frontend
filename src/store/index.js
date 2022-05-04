@@ -78,7 +78,9 @@ const actions = {
 					return false
 				}
 				else {
-					commit('setProfile', data.profile)
+					commit('setProfile', data.results)
+					dispatch('getContacts', data.results.token)
+
 					return true
 				}
 			})
@@ -116,6 +118,9 @@ const actions = {
 				dispatch('showAlert', 'An error has occured. Please try again later.')
 				return false
 			})
+	},
+	autoLogin({ commit }, payload) {
+		commit('setProfile', payload)
 	},
 	userLogout({ commit }) {
 		commit('setProfile', null)
@@ -271,13 +276,13 @@ const actions = {
 				}
 			}
 		)
-		.then(({ data }) => {
+		.then(async ({ data }) => {
 			if (data.status_code !== 200) {
-				dispatch('showAlert', data.message)
+				await dispatch('showAlert', data.message)
 				return false
 			}
 			else {
-				dispatch('getMessages', state.currContact.username)
+				await dispatch('getMessages', state.currContact.username)
 
 				return true
 			}

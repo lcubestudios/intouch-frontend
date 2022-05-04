@@ -17,7 +17,7 @@
     "vue": "^3.0.0",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2",
-    "vuex-persistedstate": "^4.1.0",
+    "vuex-persistedstate": "4.1.0",
     "webpack": "^5.67.0"
   },
   "devDependencies": {

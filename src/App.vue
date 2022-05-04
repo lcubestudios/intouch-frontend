@@ -1,5 +1,5 @@
 <template>
-	<div class="relative w-screen h-screen overflow-scroll">
+	<div class="relative w-screen h-screen overflow-hidden">
 		<component :is="'View' + currentView"></component>
 		<UiAlert 
 			v-if="hasAlert"
@@ -32,7 +32,10 @@ export default {
 		store.dispatch('setRoute', 'Home')
 
 		if (isAuthenticated.value && currentView.value === 'Auth') store.dispatch('setRoute', 'Home')
-		else if (!isAuthenticated.value && currentView.value !== 'Auth') store.dispatch('setRoute', 'Auth')
+		else if (!isAuthenticated.value && currentView.value !== 'Auth') {
+			store.dispatch('setRoute', 'Auth')
+			store.dispatch('setAuthForm', 'login')
+		}
 
     return {
       hasAlert,
