@@ -88,7 +88,7 @@ yarn build
 
 ## 📣 Connect with LCube Studios
 - 🌎 [Website](https://Lcubestudios.io)
-- ✉️ [Contact Us]("mailto:Contact@lcubestudios.io")
+- ✉️ [Contact Us](mailto:Contact@lcubestudios.io)
 - 📅 [Let's Meet](https://calendly.com/lcubestudios/30min)
 #### Follow Us
 - [LinkedIn](https://www.linkedin.com/company/lcubestudios/)
