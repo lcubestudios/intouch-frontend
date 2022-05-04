@@ -27,6 +27,8 @@ export default {
 			}
 			store.dispatch('addContact', payload)
 			store.dispatch('hideModal', 'NewContact')
+
+			username.value = ''
 		}
 
 		return {
