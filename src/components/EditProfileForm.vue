@@ -42,8 +42,12 @@ export default {
 
 		const updateProfile = () => {
 			store.dispatch('updateProfile', {
-				first_name: first_name.value,
-				last_name: last_name.value
+				first_name: !first_name.value || !first_name.value === ''
+					? current_first_name.value
+					: first_name.value,
+				last_name: !last_name.value || !last_name.value === ''
+					? current_last_name.value
+					: last_name.value
 			})
 			store.dispatch('hideModal', 'EditProfile')
 
