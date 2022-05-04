@@ -10,14 +10,23 @@ module.exports = {
       colors: {
         'black': 'var(--color-black)',
         'white': 'var(--color-white)',
-        'gray-000': 'var(--color-gray)',
-        'gray-001': 'var(--color-dark-gray)',
+        'gray-001': 'var(--color-gray-001)',
+        'gray-002': 'var(--color-gray-002)',
+        'gray-003': 'var(--color-gray-003)',
+        'gray-004': 'var(--color-gray-004)',
         'background': 'var(--color-background)',
         'primary': 'var(--color-primary)',
         'alert': 'var(--color-alert)',
+        'btn-bg': 'var(--btn-primary-bg)',
+        'btn-text': 'var(--btn-primary-text)',
+        'btn-bg-hover': 'var(--btn-hover-bg)',
+        'btn-text-hover': 'var(--btn-hover-text)',
+        'modal-bg': 'var(--modal-bg)',
+        'modal-gradient': 'var(--modal-gradient)',
       },
       padding: {
         'toolbar': 'var(--toolbar-height)',
+        'auth-page': 'var(--auth-page-padding)',
       },
       width: {
         'toolbar': 'var(--toolbar-height)',
@@ -110,6 +119,7 @@ module.exports = {
         '360px': '360px',
       },
       screens: {
+        'xs': '361px',
         'sm': '517px',
         'md': '769px',
         'lg': '1025px',

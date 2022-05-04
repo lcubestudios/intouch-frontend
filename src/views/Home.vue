@@ -1,7 +1,7 @@
 <template>
 	<div class="w-full h-full md:flex md:flex-row">
 		<ContactView 
-			class="md:flex min-w-360px md:w-1/4"
+			class="md:flex md:min-w-360px md:w-1/4"
 			:class="{
 				'hidden': currView !== 'contacts'
 			}"

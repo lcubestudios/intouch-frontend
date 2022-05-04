@@ -2,19 +2,43 @@
 :root {
 	--color-black: #1C1C1C;
 	--color-white: #FFFFFF;
-	--color-gray: #c2c2c2;
-	--color-dark-gray: #d5d5d5;
+	--color-gray-001: #c2c2c2;
+	--color-gray-002: #d5d5d5;
+	--color-gray-003: #696969;
+	--color-gray-004: #444444;
 	--color-background: #EFEFEF;
 	--color-primary: #336E8D;
 	--color-alert: #FA3E3E;
 
-	--toolbar-height: 60px;
-
-	--font-size-base: 22px;
+	/* 
+		* Typography 
+	*/
+	--font-size-base: 16px;
 	--font-size-h1: 1.875em;
 	--font-size-h2: 1.5em;
 	--font-size-h3: 1.275em;
 	--font-size-h4: 1.125em;
 	--font-size-h5: 1em;
 	--font-size-h6: 0.825em;
+
+	/* 
+		* Theme 
+	*/
+	--toolbar-height: 50px;
+	--auth-page-padding: 200px;
+	/* button */
+	--btn-primary-bg: var(--color-primary);
+	--btn-primary-text: var(--color-white);
+	--btn-hover-bg: var(--color-gray-004);
+	--btn-hover-text: var(--color-white);
+	/* modal */
+	--modal-bg: var(--color-gray-001);
+	--modal-gradient: var(--color-primary);
+}
+
+@media (min-width: 769px) {
+	:root {
+		--font-size-base: 22px;
+		--auth-page-padding: 120px;
+	}
 }

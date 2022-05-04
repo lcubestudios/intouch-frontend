@@ -18,7 +18,7 @@
     </main>
     <UiFooter class="justify-center top-round">
       <button class="relative btn-icon" @click="showNewContactModal">
-        <mdicon name="plus" />
+        <mdicon name="plus" size="36" />
       </button>
     </UiFooter>
     <NewContactForm />

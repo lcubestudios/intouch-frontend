@@ -15,9 +15,9 @@
 		<div class="form-field">
 			<input v-model="confirm_password" id="confirm_password" name="confirm_password" class="my-2" type="password" placeholder="Confirm Password" autocomplete="on" required />
 		</div>
-		<button type="submit" class="btn bg-primary text-white hover:bg-gray-700 mt-8">SIGN UP</button>
+		<button type="submit" class="btn bg-btn-bg text-btn-text hover:bg-btn-bg-hover hover:bg-btn-bg-hover:text-btn-text mt-12">SIGN UP</button>
 		<div class="mt-4 text-center">
-			<small>Already have an account? <button class="text-primary" @click="toggleLoginForm()">LOG IN</button></small>
+			<small>Already have an account? <button class="text-primary" @click="toggleLoginForm()">LOGIN</button></small>
 		</div>
 	</form>
 </template>

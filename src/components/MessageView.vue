@@ -29,6 +29,7 @@
     <UiFooter class="justify-center">
       <NewMessageForm 
 				v-if="currContact"
+				:on-submit="scrollToBottom"
 			/>
     </UiFooter>
   </section>
@@ -80,40 +81,58 @@ export default {
 			await store.dispatch('deleteMessages', currContact.value.username)
 		}
 
-		const getMessages = () => {
+		const getMessages = async () => {
 			console.log('reloading messages')
-			store.dispatch('getMessages', currContact.value.username)
+			await store.dispatch('getMessages', currContact.value.username)
 		}
 
+		let firstScroll = false
+		let isLoading = ref(true)
 		let reloadMessage
 
-		watch(currContact, (newVal) => {
-			if (newVal?.username) {
+		watch(currContact, (newVal, oldVal) => {
+			if (newVal?.username && newVal?.username !== oldVal?.username) {
+				isLoading.value = true
+				clearInterval(reloadMessage)
 				reloadMessage = setInterval(getMessages, 3000)
+				setTimeout(() => {
+					scrollToBottom()
+					isLoading.value = false
+				}, 200)
 			}
 			else {
 				console.log('stop message reload')
 				clearInterval(reloadMessage)
 			}
 		})
-
-		let firstScroll = false
-
-		const scrollToBottom = () => {
-			responses.value.scrollTop = responses.value.scrollHeight
-		}
-
+		
 		watch(messages, (newVal) => {
-			if (newVal.length > 0 && !firstScroll) {
-				scrollToBottom()
+			if (newVal.length && !firstScroll) {
+				setTimeout(() => {
+					scrollToBottom()
+				}, 200)
 				firstScroll = true
 			}
 		})
 
+		const scrollToBottom = () => {
+			console.log('scroll to bottom')
+			console.log('responses')
+			responses.value.scrollTop = responses.value.scrollHeight
+		}
+
 		onMounted(() => {
 			if (currContact.value?.username) {
 				reloadMessage = setInterval(getMessages, 3000)
+				setTimeout(() => {
+					isLoading.value = false
+				}, 200)
 			}
+			else {
+				isLoading.value = false
+			}
+			
+			scrollToBottom()
 		})
 
 		onUnmounted(() => {
@@ -131,7 +150,8 @@ export default {
 			deleteMessages,
 			scrollToBottom,
 			contactName,
-			responses
+			responses,
+			isLoading
     }
   },
 }

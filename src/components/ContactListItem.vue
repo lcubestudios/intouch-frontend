@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row flex-nowrap w-full bg-white h-80px border-b border-gray-200 cursor-pointer">
+  <div class="flex flex-row flex-nowrap w-full bg-background h-80px border-b border-gray-200 cursor-pointer">
     <div class="w-full flex items-center justify-between px-4">
       <div class="relative" @click="goToMessages(item.username)">
         <div class="profile-icon bg-primary"></div>
@@ -13,7 +13,7 @@
       <div class="flex-1 text-left px-4 select-none" @click="goToMessages(item.username)">
         {{ item.username }}
       </div>
-      <div v-if="!isToolbarVisible" class="flex items-center justify-center">
+      <div v-if="!isToolbarVisible" class="flex items-center justify-center text-primary">
         <button class="relative btn-icon" @click="showToolbar">
           <mdicon name="dots-vertical" />
         </button>

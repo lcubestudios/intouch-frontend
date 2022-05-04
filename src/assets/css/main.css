@@ -19,15 +19,20 @@
 	box-sizing: border-box;
 }
 
-.btn { padding: 1em; min-width: 200px; border-radius: 4px; }
+.btn { 
+	padding: 0.75em; 
+	min-width: 200px; 
+	font-size: 1.2rem !important;
+	border-radius: 4px;
+}
 
 .top-round::before {
 	content: '';
 	display: block;
 	position: absolute;
 	top: 0;
-	width: calc(var(--toolbar-height) * 1.5);
-	height: calc(var(--toolbar-height) * 1.5);
+	width: calc(var(--toolbar-height) * 1.25);
+	height: calc(var(--toolbar-height) * 1.25);
 	background-color: inherit;
 	transform: translate(0,-20%);
 	border-radius: 100%;
