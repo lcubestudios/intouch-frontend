@@ -78,7 +78,9 @@ const actions = {
 					return false
 				}
 				else {
-					commit('setProfile', data.profile)
+					commit('setProfile', data.results)
+					dispatch('getContacts', data.results.token)
+
 					return true
 				}
 			})

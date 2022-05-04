@@ -1,7 +1,7 @@
 <template>
   <form
     @submit.prevent="sendMessage"
-    class="flex flex-row flex-nowrap w-full h-full py-3 px-4"
+    class="flex flex-row flex-nowrap w-full h-full py-2 px-4"
   >
     <input
       v-model="body"

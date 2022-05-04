@@ -44,6 +44,11 @@ input {
 	background-color: var(--color-white);
 }
 
+input::placeholder { 
+	color: var(--placeholder-color) !important; 
+	opacity: 0.3 !important;
+}
+
 button { cursor: pointer; }
 
 /* Stop input zoom on focus */

@@ -6,7 +6,7 @@
 		<div class="form-field">
 			<input v-model="password" id="password" name="password" class="my-2" type="password" placeholder="Password" autocomplete="on" required />
 		</div>
-		<button type="submit" class="btn bg-primary text-white hover:bg-gray-700 mt-8">LOG IN</button>
+		<button type="submit" class="btn bg-btn-bg text-btn-text hover:bg-btn-bg-hover hover:bg-btn-bg-hover:text-btn-text mt-12">LOGIN</button>
 		<div class="mt-4 text-center">
 			<small>Don't have an account yet? <button class="text-primary" @click="toggleRegForm()">SIGN UP</button></small>
 		</div>
