@@ -10,7 +10,7 @@ It is a white-label product that is flexible to color and logo customizations, o
 
 ## Important Links
 
-🌎 [Demo](https://demo.lcubestudios.io/messagingapp-frontend)
+🕹️ [Demo](https://demo.lcubestudios.io/messagingapp-frontend)
 
 📝 [Case Study](https://lcubestudios.io/work/messaging-app)
 
@@ -31,7 +31,7 @@ It is a white-label product that is flexible to color and logo customizations, o
 - Styling: [Tailwlind CSS](https://tailwindcss.com/)
 - Formatting: [Prettier](https://prettier.io/) & [ESLint](https://eslint.org/)
 
-## Installation
+## 🛠️ Installation
 
 Clone repository
 ```sh
@@ -53,7 +53,7 @@ Install dependencies
 yarn install
 ```
 
-## Environment Variables
+## ⚓ Environment Variables
 > Copy  ```env.example``` to ```.env``` and adjust the values where necessary.
 
 ```env
@@ -66,7 +66,7 @@ VUE_APP_SITE_TITLE='Messaging App | Powered by LCube Studios'
 VUE_APP_LOGO_URL='/path/to/logo/'
 ```
 
-## Styling
+## 🎨  Styling
 
 #### Favicon
 To update the favicon, replace ```favicon.png``` inside the ```public/img/``` directory
@@ -74,7 +74,7 @@ To update the favicon, replace ```favicon.png``` inside the ```public/img/``` di
 #### Colors
 Theme colors can be modified in the ```_config.css``` file inside the ```src/assets/css/``` directory
 
-## Usage
+## ⛽ Usage
 
 Run Local Dev Environment 
 ```sh
@@ -86,16 +86,25 @@ Run Production Build
 yarn build
 ```
 
-## 📣 Connect with LCube Studios
-- 🌎 [Website](https://Lcubestudios.io)
-- ✉️ [Contact Us](mailto:Contact@lcubestudios.io)
-- 📅 [Let's Meet](https://calendly.com/lcubestudios/30min)
-#### Follow Us
-- [LinkedIn](https://www.linkedin.com/company/lcubestudios/)
-- [Instagram](https://www.instagram.com/lcubestudios)
-- [Facebook](https://www.facebook.com/lcubestudiosnyc/)
-- [Twitter](https://www.twitter.com/lcubestudios/)
-- [Discord](https://discord.com/invite/6Ud9x23zaK)
-- [Github](https://github.com/lcubestudios)
+## 🤝 Connect with LCube Studios
+
+🌎 [Website](https://Lcubestudios.io)
+
+✉️ [Contact Us](mailto:Contact@lcubestudios.io)
+
+📅 [Let's Meet](https://calendly.com/lcubestudios/30min)
+
+## 🤘 Follow Us
+[LinkedIn](https://www.linkedin.com/company/lcubestudios/)
+
+[Instagram](https://www.instagram.com/lcubestudios)
+
+[Facebook](https://www.facebook.com/lcubestudiosnyc/)
+
+[Twitter](https://www.twitter.com/lcubestudios/)
+
+[Discord](https://discord.com/invite/6Ud9x23zaK)
+
+[Github](https://github.com/lcubestudios)
 
 ## 💡 Let's make your FrameWork
