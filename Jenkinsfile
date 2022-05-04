@@ -9,10 +9,14 @@ pipeline{
         BUILD_COMMAND = 'yarn build'  // yarn generate
         //Enviroment Varibles below:
         
-        //ENV_NAME = 'value'
+        //ENV_NAME = 'value'## CONFIG
+				// CONFIG
 				VUE_APP_BASE_URL='/messagingapp-frontend/'
 				VUE_APP_API_URL='https://api.lcubestudios.io/master/messagingapp-api'
+
+				// BRANDING
 				VUE_APP_SITE_TITLE='Messaging App | Powered by LCube Studios'
+				VUE_APP_LOGO_URL=''
 
         //SECRET ENV will need to be added to Jenkins to be able to use them
         
