@@ -53,7 +53,7 @@ export default {
 
 <style scoped>
 .modal-content {
-	backgrund: var(--modal-bg);
+	background: var(--modal-bg);
 	background: -moz-linear-gradient(0deg, var(--modal-gradient) 0%, rgba(255,255,255,0) 50%);
 	background: -webkit-linear-gradient(0deg, var(--modal-gradient) 0%, rgba(255,255,255,0) 50%);
 	background: linear-gradient(0deg, var(--modal-gradient) 0%, rgba(255,255,255,0) 50%);

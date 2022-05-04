@@ -19,7 +19,7 @@ import { useStore } from 'vuex'
 
 const store = useStore()
 const title = process.env.VUE_APP_PROJECT_TITLE || 'MESSAGING APP'
-const logo = process.env.VUE_APP_LOGO
+const logo = process.env.VUE_APP_LOGO_URL
 
 const authForm = computed(() => {
 	return store.getters.authForm
