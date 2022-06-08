@@ -110,6 +110,7 @@ const actions = {
 				else {
 					commit('setProfile', data.results)
 					dispatch('getContacts', data.results.token)
+					dispatch('setView', 'contacts')
 
 					return true
 				}
