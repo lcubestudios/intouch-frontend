@@ -34,11 +34,7 @@ export default {
 				password: password.value
 			}
 
-			const login = await store.dispatch('userLogin', payload)
-
-			if (login) {
-				store.dispatch('setRoute', 'Home')
-			}
+			await store.dispatch('userLogin', payload)
 		}
 
 		return {

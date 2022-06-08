@@ -111,6 +111,7 @@ const actions = {
 					commit('setProfile', data.results)
 					dispatch('getContacts', data.results.token)
 					dispatch('setView', 'contacts')
+					dispatch('setRoute', 'Home')
 
 					return true
 				}
