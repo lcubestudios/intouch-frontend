@@ -33,11 +33,11 @@ export default {
 		// last_name.value = profile.value.last_name
 
 		const current_first_name = computed(() => {
-			return profile.value.first_name
+			return profile.value?.first_name || ''
 		})
 
 		const current_last_name = computed(() => {
-			return profile.value.last_name
+			return profile.value?.last_name || ''
 		})
 
 		const updateProfile = () => {

@@ -104,6 +104,7 @@ const actions = {
 			.then(({ data }) => {	
 				if (data.status_code !== 200) {
 					dispatch('showAlert', data.message)
+					dispatch('setRoute', 'Auth')
 					return false
 				}
 				else {
