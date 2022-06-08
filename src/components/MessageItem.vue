@@ -6,6 +6,7 @@
 				<MessageBubble 
 					:isSender="item.is_sender"
 					:body="item.body_text"
+					:type="item.message_type"
 				/>
 			</div>
 		</div>
@@ -15,6 +16,7 @@
 				<MessageBubble 
 					:isSender="item.is_sender"
 					:body="item.body_text"
+					:type="item.message_type"
 				/>
 			</div>
 			<div class="invisible profile-icon ml-4"></div>

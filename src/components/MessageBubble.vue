@@ -8,7 +8,10 @@
 			'rounded-tl-none': !isSender,
 		}"
 	>
-		{{ body }}
+		<template v-if="type === 'text'">{{ body }}</template>
+		<template v-if="type === 'image'">
+			<img :src="body" />
+		</template>
 	</div>
 </template>
 
@@ -18,6 +21,10 @@ export default {
 	props: {
 		body: {
 			type: String
+		},
+		type: {
+			type: String,
+			default: 'text'
 		},
 		isSender: {
 			type: Boolean
