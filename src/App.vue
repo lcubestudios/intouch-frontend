@@ -51,7 +51,7 @@ export default {
 				password: auth_param_pass
 			})
 
-			window.history.pushState({}, '', '/');
+			window.history.pushState({}, '', process.env.VUE_APP_BASE_URL);
 
 			store.dispatch('setRoute', 'Home')
 		}
