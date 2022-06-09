@@ -12,11 +12,15 @@ pipeline{
         //ENV_NAME = 'value'## CONFIG
 				// CONFIG
 				VUE_APP_BASE_URL='/messagingapp-frontend/'
-				VUE_APP_API_URL='https://api.lcubestudios.io/master/messagingapp-api'
+				VUE_APP_API_URL='https://api.lcubestudios.io/staging/messagingapp-api'
 
 				// BRANDING
 				VUE_APP_SITE_TITLE='Messaging App | Powered by LCube Studios'
 				VUE_APP_LOGO_URL=''
+
+				// AUTH
+				VUE_APP_USERNAME_PARAM='username'
+				VUE_APP_PASSWORD_PARAM='password'
 
         //SECRET ENV will need to be added to Jenkins to be able to use them
         

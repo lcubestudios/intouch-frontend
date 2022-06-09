@@ -104,11 +104,14 @@ const actions = {
 			.then(({ data }) => {	
 				if (data.status_code !== 200) {
 					dispatch('showAlert', data.message)
+					dispatch('setRoute', 'Auth')
 					return false
 				}
 				else {
 					commit('setProfile', data.results)
 					dispatch('getContacts', data.results.token)
+					dispatch('setView', 'contacts')
+					dispatch('setRoute', 'Home')
 
 					return true
 				}
