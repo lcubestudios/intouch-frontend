@@ -3,7 +3,7 @@
     @submit.prevent="sendMessage"
     class="flex flex-row flex-nowrap justify-end w-full h-full py-2 px-4"
   >
-		<div class="preview-overlay fixed bg-white p-4" v-show="hasPreviewImage && previewImageSrc">
+		<div class="preview-overlay absolute bg-white p-4" v-show="hasPreviewImage && previewImageSrc">
 			<button
 				type="button"
 				class="absolute top-0 right-0 text-primary m-2"
@@ -89,7 +89,7 @@ export default {
 			if (hasPreviewImage.value) {
 				payload = {
 					username: store.getters.currContact.username,
-					body_text: previewImageSrc.value,
+					raw_data: previewImageSrc.value,
 					message_type: 'image'
 				}
 

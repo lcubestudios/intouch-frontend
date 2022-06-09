@@ -1,11 +1,15 @@
 <template>
 	<div 
-		class="mb-4 p-4 rounded-lg break-all" 
+		class="message-bubble mb-4 p-4 rounded-lg break-all" 
 		:class="{
 			'bg-white': isSender,
 			'rounded-tr-none': isSender,
 			'bg-gray-001': !isSender,
+			'float-right': isSender,
+			'float-left': !isSender,
 			'rounded-tl-none': !isSender,
+			'message-type-text': type === 'text',
+			'message-type-image': type === 'image'
 		}"
 	>
 		<template v-if="type === 'text'">{{ body }}</template>
@@ -34,3 +38,9 @@ export default {
 	},
 }
 </script>
+
+<style scoped>
+.message-type-image {
+	max-width: 500px;
+}
+</style>
