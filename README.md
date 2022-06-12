@@ -73,6 +73,10 @@ VUE_APP_API_URL='htts://api.url'
 ## BRANDING
 VUE_APP_SITE_TITLE='Messaging App | Powered by LCube Studios'
 VUE_APP_LOGO_URL='/path/to/logo/'
+
+## URL PARAM AUTH KEYS
+VUE_APP_USERNAME_PARAM='username_url_param_key'
+VUE_APP_PASSWORD_PARAM='password_url_param_key'
 ```
 
 ## Styling
