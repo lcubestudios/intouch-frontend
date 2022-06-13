@@ -107,6 +107,7 @@ export default {
 		})
 		
 		watch(messages, (newVal) => {
+			firstScroll = false
 			if (newVal.length && !firstScroll) {
 				setTimeout(() => {
 					scrollToBottom()
