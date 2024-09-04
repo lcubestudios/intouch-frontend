@@ -1,0 +1,25 @@
+version: '3.9'
+services:
+  frontend:
+    image: lcubestudios/messaging-app-frontend:v.0.2.0
+    build:
+      context: .
+    container_name: messagingapp-frontend
+    env_file:
+      - ./.env
+    environment:
+      - VUE_APP_BASE_URL=${VUE_APP_BASE_URL}
+      - VUE_APP_API_URL=${VUE_APP_API_URL}
+      - VUE_APP_SITE_TITLE=${VUE_APP_SITE_TITLE}
+      - VUE_APP_USERNAME_PARAM=${VUE_APP_USERNAME_PARAM}
+      - VUE_APP_PASSWORD_PARAM=${VUE_APP_PASSWORD_PARAM}
+      - VUE_APP_LOGO_URL=${VUE_APP_LOGO_URL}
+    ports:
+      - "80:80"  # Expose Nginx on port 3000
+    networks:
+      - messagingapp
+    
+networks:
+  messagingapp:
+    external: true
+

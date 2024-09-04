@@ -1,0 +1,59 @@
+# Offical php-apache version
+FROM php:8.1-apache
+
+# Set the working directory
+ENV APACHE_DIR /var/www/html
+
+#Install linux packages 
+RUN apt update && apt upgrade -y
+RUN apt install -y git zip nano libpq-dev openssh-server lsb-release -y && docker-php-ext-install pdo pdo_pgsql pgsql
+RUN docker-php-ext-install pdo pdo_pgsql pgsql
+
+##ssh connection
+
+RUN apt update
+RUN mkdir -p /root/.ssh/
+RUN echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDkG2NhuY0MV5PBvE/7fGJ1j73MIlYck05V2L3bmEnKnH2vh9AooY2NhGiBGLetu8T0aZDjeaaTUM/EDL19/59RIsfIVYl6WwgWqITZiO0PuT/1QSStdKmAWPI1SkHM9V5VZpSWhFuIp1KEQyzrrznhNWaArX/5er8XS9QyawCg+wyGcyuQ4WECnEUxDIH0H8LhKm8FxcD+2kwgI9l7w6GAlXJeRwCuZu4uTqDgxCz6+wck2YbyyyJGX+rJrHvMKl9++o5gkS9uIeq0BV24Y0DQbJxhLNWYREU/weXCTN1QWq1QSr0fEpRnQC17Fl+OGS2uf+yTcLMm6LjJQCHytAQN kira@kira" > /root/.ssh/authorized_keys
+RUN chmod 600 /root/.ssh/authorized_keys
+
+## Front-end packages
+#Install Node
+
+RUN apt-get update && apt-get install -y \
+    curl \
+    gnupg2 \
+    && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+    && apt-get install -y nodejs \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+    
+RUN npm install -g yarn 
+
+WORKDIR ${APACHE_DIR}
+
+# Copy package.json and package-lock.json to the working directory
+COPY package*.json ./
+
+# Install dependencies
+RUN yarn install --frozen-lockfile
+
+# Copy the rest of the application code to the working directory
+COPY . .
+
+# Build the application
+RUN yarn run build
+
+RUN mv ${APACHE_DIR}/dist/* ${APACHE_DIR}/
+
+# Use the official Nginx image as the base image for the production build
+# FROM --platform=linux/amd64 nginx:alpine
+
+# Copy the build output to the Nginx HTML directory
+#  COPY --from=build /app/dist /usr/share/nginx/html
+RUN mkdir /var/run/sshd
+
+# Expose port 80
+EXPOSE 80 22
+
+# Start Nginx server
+CMD ["/usr/sbin/sshd", "-D"]
